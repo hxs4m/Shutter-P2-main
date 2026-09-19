@@ -61,6 +61,7 @@ var knockback_duration: float = 0.0
 
 # --- UI EXPORTS ---
 @export var flash_color_rect: ColorRect
+@onready var hit_overlay: ColorRect = $CanvasLayer/HitOverlay
 
 # --- INTRO PROMPT / CAMERA LOWER ---
 @export var play_intro: bool = true
@@ -436,3 +437,16 @@ func _on_roamer_lunge_started(roamer_node: Node3D) -> void:
 
 func _on_roamer_parry_window_closed(_success: bool) -> void:
 	locked_enemy = null
+func trigger_hit_overlay() -> void:
+	# 1. Instantly snap to pitch black
+	hit_overlay.color.a = 1.0 
+	
+	# 2. Stepped fade out (4 discrete steps over 0.4 seconds)
+	var tween = create_tween()
+	var steps = 4
+	var step_duration = 0.1
+	
+	for i in range(steps - 1, -1, -1):
+		var target_alpha = float(i) / float(steps)
+		tween.tween_property(hit_overlay, "color:a", target_alpha, 0.0) # Instant drop to level
+		tween.tween_interval(step_duration) # Hold level before next step

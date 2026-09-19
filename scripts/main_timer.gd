@@ -110,13 +110,11 @@ func _process(delta: float) -> void:
 		var vp_size: Vector2 = get_viewport().get_visible_rect().size
 
 		if randf() < teleport_chance:
-			# Random teleport across visible viewport bounds
 			time_display.position = Vector2(
 				randf_range(-150.0, vp_size.x * 0.4),
 				randf_range(20.0, vp_size.y - 120.0)
 			)
 		else:
-			# High-amplitude positional jitter offset
 			var shake := Vector2(
 				randf_range(-glitch_intensity * 15.0, glitch_intensity * 15.0),
 				randf_range(-glitch_intensity * 15.0, glitch_intensity * 15.0)
