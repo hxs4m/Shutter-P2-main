@@ -10,7 +10,7 @@ extends Area3D
 @export var glitch_duration: float = 3.0
 @export var tick_tock_interval: float = 1.0
 @export var shake_intensity: float = 0.2
-@export var number_of_twentytwos: int = 0
+@export var number_of_twentytwos: int = 18
 
 @export_group("Proximity Settings")
 @export var proximity_distance: float = 25.0  # Outer threshold set to 25 meters
@@ -154,10 +154,6 @@ func _on_body_entered(body: Node3D) -> void:
 
 
 func _trigger_glitch_sequence(player: Node3D) -> void:
-	var pause_menu = get_tree().root.find_child("PauseMenu", true, false)
-	if pause_menu:
-		pause_menu.process_mode = Node.PROCESS_MODE_DISABLED
-		
 	if glitch_audio_player:
 		glitch_audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 		glitch_audio_player.play()
@@ -199,13 +195,23 @@ func _trigger_glitch_sequence(player: Node3D) -> void:
 
 	# --- MODIFIED: Replaced '22' text loop with a glitched Win State text ---
 	if win_label:
-		win_label.text = "[center][font_size=80][shake rate=50.0 level=20][color=beige]L E V E L 1 P A S S E D[/color][/shake][/font_size][/center]"
+		win_label.text = "[center][font_size=80][shake rate=50.0 level=20][color=beige]Y O U  W I N[/color][/shake][/font_size][/center]"
 
 	_spawn_haphazard_twentytwos()
 
 # Pause momentarily on the glitched win text
 	await get_tree().create_timer(post_win_delay, true, false, true).timeout
-
+	
+	# --- NEW: SHOW SCORE MENU AND WAIT ---
+	# (Assuming you put your ScoreMenu inside your UI node)
+	var ui = get_tree().root.find_child("UI", true, false)
+	if ui and ui.has_node("ScoreMenu"):
+		var score_menu = ui.get_node("ScoreMenu")
+		score_menu.show_score()
+		
+		# Wait right here until the player clicks the "Proceed" button!
+		await score_menu.next_level_button.pressed 
+	# -------------------------------------
 
 	# After they click proceed, carry out the world scene swap
 	_cleanup_and_swap_scenes(player)
@@ -239,11 +245,6 @@ func _spawn_haphazard_twentytwos() -> void:
 
 # --- Performs clean swap on the world tree nodes while preserving UI/Shaders ---
 func _cleanup_and_swap_scenes(player: Node3D) -> void:
-	
-	var pause_menu = get_tree().root.find_child("PauseMenu", true, false)
-	if pause_menu:
-		pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
-		
 	# 1. Strip out the glitched label elements from the screen
 	for lbl in _spawned_labels:
 		if is_instance_valid(lbl):

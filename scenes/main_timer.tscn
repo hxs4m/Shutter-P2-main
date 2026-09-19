@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cwjx0u0lo0nw5" path="res://scripts/main_timer.gd" id="1_lh2be"]
 
 [node name="Main Timer" type="Node" unique_id=203433636]
-process_mode = 1
 script = ExtResource("1_lh2be")
 
 [node name="TimeDisplay" type="RichTextLabel" parent="." unique_id=1065760690]

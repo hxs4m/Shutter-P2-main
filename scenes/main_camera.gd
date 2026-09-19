@@ -26,6 +26,7 @@ extends Node3D
 
 # --- FULL SCREEN FLASH ---
 @export var flash_color_rect: ColorRect
+@export var flash_tint_strength: float = 0.25
 
 # --- CASTING & AUDIO SETUP ---
 @export var enable_raycast: bool = true
@@ -64,6 +65,13 @@ enum CameraMode { STUN, REPEL, REVEAL }
 @export var mode_label_hold_time: float = 1.0
 @export var mode_label_fade_duration: float = 0.6
 @export var mode_label_fade_steps: int = 4
+
+# --- REPEL EFFECT TUNING ---
+@export var repel_hit_pitch: float = 1.0
+@export var repel_perfect_pitch: float = 1.4
+@export var repel_player_force: float = 10.0
+@export var repel_player_vertical_force: float = 4.0
+@export var repel_player_duration: float = 0.3
 
 var current_mode: int = CameraMode.STUN
 var _mode_lights: Array[MeshInstance3D] = []
@@ -115,7 +123,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		mouse_delta = event.relative
 
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	if event.is_action_pressed('snap'):
 		take_snapshot()
 
 	if event.is_action_pressed(zoom_action):
@@ -187,7 +195,7 @@ func _show_mode_label() -> void:
 		var target_alpha: float = float(i) / float(mode_label_fade_steps)
 		mode_label_tween.tween_callback(func(): mode_label.modulate.a = target_alpha)
 		mode_label_tween.tween_interval(step_delay)
-		
+
 func _start_zoom() -> void:
 	is_zoomed = true
 	if player:
@@ -250,6 +258,8 @@ func _check_shapecast_hit() -> void:
 			var pitch: float = _process_photo_hit(hit_object)
 			if pitch >= 0.0 and capture_pitch < 0.0:
 				capture_pitch = pitch
+			if current_mode != CameraMode.REPEL and pitch >= 0.0:
+				break
 
 	if capture_pitch >= 0.0:
 		_play_capture_sfx(capture_pitch)
@@ -268,6 +278,32 @@ func _process_photo_hit(target: Object) -> float:
 	if not target:
 		return -1.0
 
+	# --- SANCTUM CHECK ---
+	# Sanctums are neutral: they're not stunned/repelled/revealed like the
+	# Roamer/Abstract targets below. Any photo mode landing on one just
+	# provokes it, so this branch short-circuits before the mode match.
+	var sanctum_target: Object = target
+	if not (sanctum_target is Node and sanctum_target.is_in_group("sanctums")):
+		if target.get("owner") and target.owner is Node and target.owner.is_in_group("sanctums"):
+			sanctum_target = target.owner
+
+	if sanctum_target is Node and sanctum_target.is_in_group("sanctums"):
+		if sanctum_target.has_method("apply_flash"):
+			var from_pos: Vector3 = zoom_camera.global_transform.origin if zoom_camera else global_transform.origin
+			return sanctum_target.apply_flash(from_pos)
+		return -1.0
+
+	match current_mode:
+		CameraMode.STUN:
+			return _apply_stun(target)
+		CameraMode.REPEL:
+			return _apply_repel(target)
+		CameraMode.REVEAL:
+			return _apply_reveal(target)
+
+	return -1.0
+
+func _apply_stun(target: Object) -> float:
 	if target.has_method("apply_stun"):
 		target.apply_stun()
 	elif target.get("owner") and target.owner.has_method("apply_stun"):
@@ -279,6 +315,34 @@ func _process_photo_hit(target: Object) -> float:
 		return target.owner.disappear_from_photo()
 
 	return -1.0
+
+func _apply_reveal(target: Object) -> float:
+	if target.has_method("apply_reveal"):
+		return target.apply_reveal()
+	elif target.get("owner") and target.owner.has_method("apply_reveal"):
+		return target.owner.apply_reveal()
+
+	return -1.0
+
+func _apply_repel(target: Object) -> float:
+	var repel_target: Object = target
+	if not repel_target.has_method("apply_repel") and repel_target.get("owner") and repel_target.owner.has_method("apply_repel"):
+		repel_target = repel_target.owner
+
+	if not repel_target.has_method("apply_repel"):
+		return -1.0
+
+	var from_pos: Vector3 = zoom_camera.global_transform.origin if zoom_camera else global_transform.origin
+	var perfect: bool = repel_target.apply_repel(from_pos)
+
+	if perfect and player:
+		var push_dir: Vector3 = player.global_transform.origin - repel_target.global_transform.origin
+		push_dir.y = 0.0
+		if push_dir.length() > 0.001:
+			push_dir = push_dir.normalized()
+		player.apply_knockback(push_dir, repel_player_force, repel_player_vertical_force, repel_player_duration)
+
+	return repel_perfect_pitch if perfect else repel_hit_pitch
 
 func _play_shutter_sfx() -> void:
 	if not shutter_sound:
@@ -298,7 +362,9 @@ func _play_capture_sfx(pitch: float) -> void:
 
 func _trigger_flash() -> void:
 	if flash_color_rect:
-		flash_color_rect.color = Color(1.0, 1.0, 1.0, 1.0)
+		var mode_color: Color = _mode_colors[current_mode] if current_mode < _mode_colors.size() else Color.WHITE
+		var tinted: Color = Color.WHITE.lerp(mode_color, flash_tint_strength)
+		flash_color_rect.color = Color(tinted.r, tinted.g, tinted.b, 1.0)
 		var duration: float = 0.18
 		var steps: int = 3
 		var step_delay: float = duration / float(steps)

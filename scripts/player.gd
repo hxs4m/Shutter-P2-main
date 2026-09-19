@@ -42,8 +42,15 @@ var current_roll: float = 0.0
 @export var BASE_FOV = 75.0
 @export var FOV_CHANGE = 1.5
 
-# --- ZOOM / ADS (set by the camera script) ---
+# --- ZOOM / ADS / REPEL ---
 var is_zoomed: bool = false
+var is_repel_mode_active: bool = true 
+var locked_enemy: Node3D = null
+
+# --- KNOCKBACK ---
+var knockback_velocity: Vector3 = Vector3.ZERO
+var knockback_timer: float = 0.0
+var knockback_duration: float = 0.0
 
 # --- AUDIO ARRAYS & EXPORTS ---
 @export var walk_sounds: Array[AudioStream] = []
@@ -54,6 +61,37 @@ var is_zoomed: bool = false
 
 # --- UI EXPORTS ---
 @export var flash_color_rect: ColorRect
+@onready var hit_overlay: ColorRect = $CanvasLayer/HitOverlay
+
+# --- INTRO PROMPT / CAMERA LOWER ---
+@export var play_intro: bool = true
+@export var intro_delay: float = 1.0
+@export var CAMERA_LOWER_OFFSET: float = 0.8   # how far the camera model drops (local units)
+@export var CAMERA_LOWER_TIME: float = 0.6
+
+var camera_lowered: bool = false
+var camera_toggled_once: bool = false
+var intro_prompt_active: bool = false
+var lower_parts: Array[Node3D] = []             # visual parts of Main_Camera that get lowered
+var lower_part_rest: Dictionary = {}            # part -> rest position
+var camera_tween: Tween
+
+# --- INPUT BLOCKING WHILE LOWERED ---
+# WHITELIST approach: only these actions stay usable while the camera is lowered.
+# Every other action in your Input Map is cut off — snap/photo, mode switches,
+# anything else — no matter what key or mouse button it's bound to.
+@export var zoom_actions: Array[StringName] = []   # left empty: zoom is now blocked too while lowered. Add an action name here if you ever want something to stay live.
+@export var always_allowed_actions: Array[StringName] = [
+	&"left", &"right", &"up", &"down", &"sprint", &"jump", &"toggle_camera"
+]
+var saved_action_events: Dictionary = {}
+
+# --- MOUSE BUTTON BLOCKING WHILE LOWERED ---
+# Belt-and-suspenders on top of the InputMap whitelist above: this stops the raw click
+# event itself from ever reaching Main_Camera.gd (or wherever zoom/photo live), which
+# matters if that script reads mouse buttons directly instead of through a named action.
+@export var block_left_click_while_lowered: bool = true    # Flash / Snap Picture
+@export var block_right_click_while_lowered: bool = true   # Zoom
 
 # --- CAMERA SNAP COOLDOWN & CAST SETTINGS ---
 @export var enable_raycast: bool = true
@@ -69,18 +107,25 @@ var was_on_wall: bool = false
 # --- NODES ---
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
+@onready var camera_model: Node3D = $Head/Camera3D/Main_Camera
 @onready var camera_ray: RayCast3D = $Head/Camera3D/RayCast3D
 @onready var camera_shapecast: ShapeCast3D = $Head/Camera3D/ShapeCast3D
-@onready var viewmodel_camera = $SubViewportContainer/SubViewport/ViewmodelCamera
+@onready var viewmodel_camera = get_node_or_null('SubViewportContainer/SubViewport/ViewmodelCamera')
 @onready var sfx_player: AudioStreamPlayer3D = $SFXPlayer
 @onready var impact_player: AudioStreamPlayer3D = $ImpactPlayer
 @onready var camera_sfx_player: AudioStreamPlayer = $CameraSFXPlayer
-@onready var stamina_bar: ProgressBar = get_parent().get_node_or_null("UI/StaminaBar")
-
+@onready var stamina_bar: ProgressBar = get_parent().get_node_or_null('UI/StaminaBar')
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+
+	add_to_group("PlayerGroup")
+	add_to_group("Player")
+
+	# Set raycast distance to reach distant / flying Sanctums for gaze detection
+	if camera_ray:
+		camera_ray.target_position = Vector3(0, 0, -150.0)
+
 	if stamina_bar:
 		stamina_bar.max_value = max_stamina
 		stamina_bar.value = current_stamina
@@ -89,23 +134,173 @@ func _ready():
 		flash_color_rect.color.a = 0.0
 		flash_color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+	# C toggles the camera. Action is created here so no Project Settings setup is needed
+	if not InputMap.has_action('toggle_camera'):
+		InputMap.add_action('toggle_camera')
+		var c_key := InputEventKey.new()
+		c_key.physical_keycode = KEY_C
+		InputMap.action_add_event('toggle_camera', c_key)
+
+	# collect the visual parts of the camera model and remember their rest positions
+	if camera_model:
+		for child in camera_model.get_children():
+			var part := child as Node3D
+			if part:
+				lower_parts.append(part)
+				lower_part_rest[part] = part.position
+	if play_intro:
+		_run_intro()
+
+# --- INTRO PROMPT ---
+func _run_intro() -> void:
+	await get_tree().create_timer(intro_delay).timeout
+	if camera_toggled_once:
+		return
+	var box = _get_dialogue_box()
+	if box:
+		intro_prompt_active = true
+		box.show_message("Wow...", "press C to lower camera")
+
+func _get_dialogue_box() -> Node:
+	return get_tree().get_first_node_in_group("dialogue_box")
+
+# --- CAMERA TOGGLE (C) ---
+func toggle_camera() -> void:
+	camera_toggled_once = true
+	if camera_lowered:
+		raise_camera()
+	else:
+		lower_camera()
+
+	# first press dismisses the intro prompt
+	if intro_prompt_active:
+		intro_prompt_active = false
+		var box = _get_dialogue_box()
+		if box:
+			box.hide_message()
+
+func lower_camera() -> void:
+	if camera_lowered or lower_parts.is_empty():
+		return
+	camera_lowered = true
+	_set_actions_blocked(true)
+	_tween_camera_parts(true)
+
+func raise_camera() -> void:
+	if not camera_lowered or lower_parts.is_empty():
+		return
+	camera_lowered = false
+	_tween_camera_parts(false)
+	# give the actions back once the camera is fully raised
+	camera_tween.finished.connect(_on_camera_raised, CONNECT_ONE_SHOT)
+
+# Moves only the visual parts of the camera model. Main_Camera itself is left alone,
+# so its script keeps running (zoom, modes) while the camera is lowered.
+func _tween_camera_parts(lowered: bool) -> void:
+	if camera_tween:
+		camera_tween.kill()
+	camera_tween = create_tween().set_parallel(true)
+	camera_tween.set_trans(Tween.TRANS_SINE)
+	camera_tween.set_ease(Tween.EASE_IN if lowered else Tween.EASE_OUT)
+	for part in lower_parts:
+		var target: Vector3 = lower_part_rest[part]
+		if lowered:
+			target += Vector3(0.0, -CAMERA_LOWER_OFFSET, 0.0)
+		camera_tween.tween_property(part, "position", target, CAMERA_LOWER_TIME)
+
+func _on_camera_raised() -> void:
+	if not camera_lowered:
+		_set_actions_blocked(false)
+
+func _exit_tree() -> void:
+	# never leave the Input Map stripped (scene reloads, quitting to menu, etc.)
+	_set_actions_blocked(false)
+
+func _get_actions_to_block() -> Array[StringName]:
+	var allowed: Array[StringName] = []
+	allowed.append_array(always_allowed_actions)
+	allowed.append_array(zoom_actions)
+
+	var result: Array[StringName] = []
+	for a in InputMap.get_actions():
+		if allowed.has(a) or String(a).begins_with("ui_"):
+			continue
+		result.append(a)
+	return result
+
+func _set_actions_blocked(blocked: bool) -> void:
+	if blocked:
+		if not saved_action_events.is_empty():
+			return   # already blocked
+		for a in _get_actions_to_block():
+			saved_action_events[a] = InputMap.action_get_events(a).duplicate()
+			InputMap.action_erase_events(a)
+			Input.action_release(a)
+		print("Blocked while lowered: ", saved_action_events.keys())
+	else:
+		for a in saved_action_events:
+			for e in saved_action_events[a]:
+				InputMap.action_add_event(a, e)
+		saved_action_events.clear()
 
 func _process(_delta):
 	if viewmodel_camera and camera:
 		viewmodel_camera.global_transform = camera.global_transform
 
-
 func _unhandled_input(event):
+	# C toggles the camera, checked first so it always works
+	if event.is_action_pressed('toggle_camera'):
+		toggle_camera()
+		return
+
+	# no snapping while the camera is lowered
+	var snap_pressed = InputMap.has_action('snap') and event.is_action_pressed('snap') and can_snap and not camera_lowered
+
+	if locked_enemy != null:
+		if snap_pressed:
+			_attempt_snap()
+		return
+
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
-		
 		camera_base_pitch -= event.relative.y * SENSITIVITY
 		camera_base_pitch = clamp(camera_base_pitch, deg_to_rad(-40), deg_to_rad(60))
 
+	if snap_pressed:
+		_attempt_snap()
+
+func _attempt_snap() -> void:
+	can_snap = false
+	if camera_ray.is_colliding():
+		var collider = camera_ray.get_collider()
+		var hit_distance = camera.global_position.distance_to(camera_ray.get_collision_point())
+		
+		# Limit parry / snap activation to close proximity (5 units)
+		if hit_distance <= 5.0:
+			if collider.is_in_group('abstracts'):
+				# play abstract logic
+				pass
+				
+	await get_tree().create_timer(SNAP_COOLDOWN).timeout
+	can_snap = true
+
+func apply_knockback(direction: Vector3, force: float, vertical_force: float = 0.0, duration: float = 0.3) -> void:
+	knockback_velocity = direction * force
+	knockback_timer = duration
+	knockback_duration = duration
+	if vertical_force > 0.0:
+		velocity.y = vertical_force
 
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+
+	if locked_enemy:
+		var to_target = (locked_enemy.global_position + Vector3.UP * 1.5) - camera.global_position
+		var target_y = atan2(-to_target.x, -to_target.z)
+		var target_pitch = asin(to_target.y / to_target.length())
+		head.rotation.y = lerp_angle(head.rotation.y, target_y, 15.0 * delta)
+		camera_base_pitch = lerp_angle(camera_base_pitch, target_pitch, 15.0 * delta)
 
 	if was_in_air and is_on_floor():
 		_play_random_sfx(land_sounds, sfx_player, 0.0, 0.05, 1.0)
@@ -118,9 +313,9 @@ func _physics_process(delta):
 		if floor_time > BHOP_WINDOW:
 			bhop_count = 0
 
-	var input_dir = Input.get_vector("left", "right", "up", "down")
+	var input_dir = Input.get_vector('left', 'right', 'up', 'down')
 	var is_moving = input_dir.length() > 0.0
-	var is_trying_to_sprint = Input.is_action_pressed("sprint") and is_moving
+	var is_trying_to_sprint = Input.is_action_pressed('sprint') and is_moving
 	
 	if is_trying_to_sprint and current_stamina > 0.0:
 		speed = SPRINT_SPEED
@@ -142,7 +337,7 @@ func _physics_process(delta):
 	current_stamina = clamp(current_stamina, 0.0, max_stamina)
 
 	if stamina_bar:
-		if stamina_bar.has_method("update_stamina"):
+		if stamina_bar.has_method('update_stamina'):
 			stamina_bar.update_stamina(current_stamina, max_stamina, is_trying_to_sprint)
 		else:
 			stamina_bar.value = current_stamina
@@ -151,7 +346,7 @@ func _physics_process(delta):
 	var bhop_progress = float(bhop_count) / 3.0
 	current_max_speed = lerp(base_speed, MAX_BHOP_SPEED, clamp(bhop_progress, 0.0, 1.0))
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed('jump') and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		_play_random_sfx(jump_sounds, sfx_player, 0.0, 0.05, 1.0)
 		
@@ -161,7 +356,12 @@ func _physics_process(delta):
 
 	var direction = (head.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	if is_on_floor():
+	if knockback_timer > 0.0:
+		knockback_timer -= delta
+		var knockback_decay: float = clamp(knockback_timer / knockback_duration, 0.0, 1.0)
+		velocity.x = knockback_velocity.x * knockback_decay
+		velocity.z = knockback_velocity.z * knockback_decay
+	elif is_on_floor():
 		if direction:
 			velocity.x = direction.x * current_max_speed
 			velocity.z = direction.z * current_max_speed
@@ -174,7 +374,7 @@ func _physics_process(delta):
 
 	var horizontal_speed = Vector2(velocity.x, velocity.z).length()
 	if is_on_floor() and is_moving and horizontal_speed > 0.5:
-		if Input.is_action_just_pressed("up") or Input.is_action_just_pressed("down") or Input.is_action_just_pressed("left") or Input.is_action_just_pressed("right"):
+		if Input.is_action_just_pressed('up') or Input.is_action_just_pressed('down') or Input.is_action_just_pressed('left') or Input.is_action_just_pressed('right'):
 			_play_footstep()
 			step_timer = 0.0
 		else:
@@ -210,31 +410,43 @@ func _physics_process(delta):
 		bhop_count = 0
 	was_on_wall = is_on_wall()
 
-
 func _headbob(horizontal_speed: float, delta: float) -> Vector3:
 	var pos = Vector3.ZERO
-	
 	if is_on_floor():
 		bob_phase += horizontal_speed * delta * BOB_FREQ
 		var speed_factor = clamp(horizontal_speed / SPRINT_SPEED, 0.0, 1.0)
-		
 		pos.y = sin(bob_phase) * BOB_AMP * speed_factor
 		pos.x = cos(bob_phase * 0.5) * BOB_AMP * speed_factor
-		
 	return pos
-
 
 func _play_footstep() -> void:
 	_play_random_sfx(walk_sounds, sfx_player, 0.0, 0.08, 1.0)
 
-
 func _play_random_sfx(sound_array: Array[AudioStream], target_player: AudioStreamPlayer3D, base_volume_db: float = 0.0, pitch_range: float = 0.08, volume_range: float = 1.0) -> void:
 	if sound_array.is_empty() or not target_player:
 		return
-	
 	var random_sound = sound_array.pick_random()
 	if random_sound:
 		target_player.stream = random_sound
 		target_player.pitch_scale = randf_range(1.0 - pitch_range, 1.0 + pitch_range)
 		target_player.volume_db = base_volume_db + randf_range(-volume_range, volume_range)
 		target_player.play()
+
+func _on_roamer_lunge_started(roamer_node: Node3D) -> void:
+	locked_enemy = roamer_node
+
+func _on_roamer_parry_window_closed(_success: bool) -> void:
+	locked_enemy = null
+func trigger_hit_overlay() -> void:
+	# 1. Instantly snap to pitch black
+	hit_overlay.color.a = 1.0 
+	
+	# 2. Stepped fade out (4 discrete steps over 0.4 seconds)
+	var tween = create_tween()
+	var steps = 4
+	var step_duration = 0.1
+	
+	for i in range(steps - 1, -1, -1):
+		var target_alpha = float(i) / float(steps)
+		tween.tween_property(hit_overlay, "color:a", target_alpha, 0.0) # Instant drop to level
+		tween.tween_interval(step_duration) # Hold level before next step

@@ -24,8 +24,8 @@ turbulence_noise_strength = 7.75
 turbulence_noise_speed_random = 4.0
 
 [sub_resource type="Gradient" id="Gradient_xgqkh"]
-offsets = PackedFloat32Array(0, 0.13958333, 0.26875, 0.5229167)
-colors = PackedColorArray(0.9607843, 0.9254902, 0.49411765, 1, 0.9607843, 0.9254902, 0.49411765, 1, 0.9607843, 0.9254902, 0.49411765, 1, 0.99999934, 0.9915505, 0.7073497, 0)
+offsets = PackedFloat32Array(0, 0.07911392, 0.22468354, 0.42088607)
+colors = PackedColorArray(0.95903736, 0.9255659, 0.4936139, 1, 0.95903736, 0.9255659, 0.4936139, 1, 0.95903736, 0.9255659, 0.4936139, 1, 0.46239305, 0.45465982, 0.1315535, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hyyc2"]
 gradient = SubResource("Gradient_xgqkh")

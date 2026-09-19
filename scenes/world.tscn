@@ -18,16 +18,17 @@
 [ext_resource type="Texture2D" uid="uid://d2sj47qu76vtv" path="res://Models/Camera/cam_camera_sheet_recolored_v2.png" id="12_munwf"]
 [ext_resource type="AudioStream" uid="uid://ds6y13hd1lfws" path="res://sfx/zoom in.wav" id="13_ggc52"]
 [ext_resource type="AudioStream" uid="uid://q5qcg52p6aw2" path="res://sfx/camsnap.wav" id="13_pm21f"]
-[ext_resource type="AudioStream" uid="uid://83sduk10v0so" path="res://sfx/flashlight1.wav" id="14_l8ah6"]
+[ext_resource type="AudioStream" uid="uid://iaxeqhxbr8tc" path="res://sfx/flashlight1.wav" id="14_l8ah6"]
 [ext_resource type="Texture2D" uid="uid://dal01x2ei6b0a" path="res://Models/Camera/cam1_sheet_with_backpanel.png" id="14_ts3gi"]
 [ext_resource type="PackedScene" uid="uid://d0ckw6vvjrw8e" path="res://scenes/Enemy.tscn" id="16_dss4m"]
 [ext_resource type="AudioStream" uid="uid://mtiv5aqvv1hl" path="res://sfx/freesound_community-factory-fluorescent-light-buzz-6871.mp3" id="17_7t5mc"]
-[ext_resource type="Texture2D" path="res://crosshair1.png" id="17_f17e3"]
+[ext_resource type="Texture2D" uid="uid://c7uucwelkrbss" path="res://textures/crosshair1.png" id="17_f17e3"]
 [ext_resource type="AudioStream" uid="uid://bodhhv4dinrvq" path="res://sfx/freesound_community-four_voices_whispering-6943.mp3" id="17_kpybi"]
 [ext_resource type="Script" uid="uid://dobk0s05hij4r" path="res://scenes/screen_fade.gd" id="17_lakw3"]
 [ext_resource type="AudioStream" uid="uid://byyv83ryafybv" path="res://sfx/distorted-trumpets-hl2.mp3" id="18_ctatt"]
 [ext_resource type="PackedScene" uid="uid://ccwjniyplswd0" path="res://scenes/ScoreMenu.tscn" id="18_x2olw"]
 [ext_resource type="FontFile" uid="uid://xusiglykfc7h" path="res://addons/home-video/HomeVideo-Regular.ttf" id="19_817gm"]
+[ext_resource type="AudioStream" uid="uid://cpj87y32kpmea" path="res://sfx/medshotno1.wav" id="19_e75v4"]
 [ext_resource type="PackedScene" uid="uid://clp76l45dqdvc" path="res://scenes/Door.tscn" id="21_7iits"]
 [ext_resource type="AudioStream" uid="uid://djffv7e5p6qk6" path="res://sfx/freesound_community-glitch-101494.mp3" id="21_oo54l"]
 [ext_resource type="AudioStream" uid="uid://dhjlr5tvu0443" path="res://sfx/canals_tunnel_wind_loop1.wav" id="22_kpybi"]
@@ -39,7 +40,6 @@
 [ext_resource type="Texture2D" uid="uid://eb61ht82or2a" path="res://Abstract Pics/Screenshot 2026-09-13 205505.png" id="32_x2olw"]
 [ext_resource type="Texture2D" uid="uid://cyhou8nrmi1x" path="res://Abstract Pics/Screenshot 2026-09-13 205601.png" id="33_817gm"]
 [ext_resource type="Texture2D" uid="uid://balrrjm4i436p" path="res://Abstract Pics/Screenshot 2026-09-13 205623.png" id="34_ggc52"]
-[ext_resource type="PackedScene" uid="uid://cbpjd6tuvcxli" path="res://scenes/pause_menu.tscn" id="40_e75v4"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3enge"]
 
@@ -53,7 +53,7 @@ albedo_texture = ExtResource("12_munwf")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_8u370"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_l8ah6"]
 _surfaces = [{
 "aabb": AABB(-0.8732674, -1, -1.0125436, 1.7392929, 2, 2.0125437),
 "format": 34896613377,
@@ -83,7 +83,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("d38AAAAAqer/////MkGp6oeA//+YAanq7v4AAJk/qeru/gAAmT//v/////9lwP+//////zJB/7/u/gAAzL7/v+7+AADMvlWVh4D/////VZX/////ZcBVlXd/AABm/lWVd38AAGb+VZUQAf//ZcBVlYeA/////1WVAAAAAMy+VZX/////ZcD/v4eA//+YAf+//////zJB/78QAf//ZcD/v4eA//////+/EAH//zJB/78AAAAAzL7/vxAB//8yQf+/EAH//2XA/78AAAAAmT//vwAAAACZP6nqh4D//5gBqeoQAf//MkGp6nd/AAAAAKnqAAAAAJk/ST3u/gAAmT9JPXd/AAAAAEk9d38AAGb+ST0AAAAAzL5JPe7+AADMvkk9SoAPAEqADwBKgA8ASoAPAMR/dQDEf3UAxH91AMR/dQBOfiQCTn4kAk5+JAJOfiQC6n4k/+p+JP/qfiT/6n4k//7//3////9//v//f////3////9//v//fzqAif86gIn/OoCJ/zqAif8egGr/HoBq/x6Aav8egGr/jiy4aY4suGmOLLhpjiy4aY4suGmOLLhp")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_8u370")
+shadow_mesh = SubResource("ArrayMesh_l8ah6")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c2jm4"]
 resource_name = "Material.004"
@@ -92,7 +92,7 @@ albedo_texture = ExtResource("12_munwf")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_rga7q"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_e75v4"]
 _surfaces = [{
 "aabb": AABB(-1.2195544, -8.295831, -1.2217447, 2.4434893, 9.295831, 2.4434893),
 "format": 34896613377,
@@ -122,7 +122,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("ABfryMPoVNUAF///OxdU1QAX///D6FTVABfryDsXVNUAF+vIOxf//4no//87F///ABf//zsX//+J6OvIOxf//4no68g7F1TViej//8PoVNWJ6P//OxdU1Yno68jD6FTViejryMPo/78AF///w+j/v4no///D6P+/ABfryMPo/7+J6P//Oxf//wAX///D6P//ABf//zsX//+J6P//w+j//wAX68jD6KfyAADixQAAp/IAF+vIOxen8gAA4sX//6fyABfryDsX/////+LFAAD//4no68g7F///AADixQAA//+J6OvIw+j//wAA4sX/////ABfryMPo/////+LF/////4no68g7F+Hy///ixf//4fKJ6OvIw+jh8v//4sUAAOHyAADixQAA//9mygAAAAD/////4sUAAP//KDUAAAAA//8oNQAAAAD//2bKAACW4///ZsoAAAAA//8oNQAAluP//wAA4sX///f9KDUAAAAA9/0AAOLFAAD3/Sg1AACW4/f9///ixQAA8v1mygAAluPy/f//4sX///L9ZsoAAAAA8v3//+LF/////yg1AACW4///AADixf////9mygAAluP//1RVqqpUVaqqVFWqqlRVqqr/v/8//7//P/+//z//P/+/qqpUVaqqVFWqqlRVqqpUVf9//3//f/9//3//f/9//3//f/+//3//v/9//7//f/+/cXI4uXFyOLlxcji5cXI4uf9/Bc//fwXP/38Fz/9/Bc//f/iw/3/4sP9/+LD/f/iwVDlXDVQ5Vw1UOVcNVDlXDf///3////9/////f////3//f/8//3//P/9//z//f/8/G0HIfRtByH0bQch9G0HIfTwCHcE8Ah3BPAIdwTwCHcH/f6F9/3+hff9/oX3/f6F9")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_rga7q")
+shadow_mesh = SubResource("ArrayMesh_e75v4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slnkd"]
 resource_name = "Material.005"
@@ -131,7 +131,7 @@ albedo_texture = ExtResource("12_munwf")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_6oujy"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_8u370"]
 _surfaces = [{
 "aabb": AABB(-1, -1, -1, 2, 2, 2),
 "format": 34896613377,
@@ -161,7 +161,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAFTV////////VNX/////AABU1f//AAD//1TV//8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_6oujy")
+shadow_mesh = SubResource("ArrayMesh_8u370")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6oi6"]
 resource_name = "Material.002"
@@ -170,7 +170,7 @@ albedo_texture = ExtResource("14_ts3gi")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_hi6a0"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_rga7q"]
 _surfaces = [{
 "aabb": AABB(-1, -1, -3.373229, 2, 2, 4.9357142),
 "format": 34359742465,
@@ -200,7 +200,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/AACAvwAAgL8AAIC/fzwOPwAAgL8AAIC/fzwOPz7VLj/84lfAfzwOPwAAgD8AAIC/fzwOPwAAgL/84lfAAACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgD8AAIC/AACAPwAAgL8AAIA/2/9vvwAAgL8AAIA/AACAvwAAgD8AAIA/2/9vvwAAgD8AAIA/AACAvwAAgL8AAIA/agFxPwAAgL8AAIC/AACAPwAAgL8AAIA/AACAPwAAgL8AAIC/agFxPwAAgL8AAIA/2/9vvwAAgD8AAIC/AACAvwAAgD8AAIA/AACAvwAAgD8AAIC/2/9vvwAAgD8AAIA/agFxPwAAgD8AAIC/fzwOPwAAgD8AAIA/fzwOPwAAgD8AAIC/agFxPwAAgD8AAIA/2/9vvwAAgL8AAIC/fzwOPwAAgL8AAIA/fzwOPwAAgL8AAIC/2/9vvwAAgL8AAIA/fzwOPwAAgL8AAIA/agFxPwAAgL/INLg/agFxPwAAgL8AAIA/fzwOPwAAgL/INLg/2/9vvwAAgL8AAIA/2/9vvwAAgL/INLg/AACAvwAAgL8AAIC/2/9vvwAAgL8AAIC/AACAvwAAgL8AAIA/2/9vvwAAgL8AAIC/fzwOPwAAgD8AAIC/2/9vvwAAgD8AAIC/fzwOPwAAgL8AAIC/agFxPwAAgL/84lfAAACAPz7VLj/84lfAagFxPz7VLj/84lfAAACAPwAAgL/84lfAAACAPwAAgD8AAIC/AACAPwAAgL/84lfAAACAPwAAgL8AAIC/AACAPz7VLj/84lfAagFxPwAAgD8AAIC/AACAPz7VLj/84lfAAACAPwAAgD8AAIC/agFxPz7VLj/84lfAagFxPwAAgL8AAIC/fzwOPwAAgL/84lfAfzwOPwAAgL8AAIC/agFxPwAAgL/84lfAAACAvwAAgL8AAIC/2/9vvwAAgD8AAIC/AACAvwAAgD8AAIC/2/9vvwAAgL8AAIC/fzwOPwAAgD8AAIC/2/9vvwAAgD8AAIA/2/9vvwAAgD8AAIC/fzwOPwAAgD8AAIA/agFxPwAAgL8AAIA/agFxPwAAgD/INLg/agFxPwAAgD8AAIA/agFxPwAAgL/INLg/AACAPwAAgL8AAIC/agFxPwAAgL/84lfAagFxPwAAgL8AAIC/AACAPwAAgL/84lfAfzwOPwAAgD8AAIC/agFxPz7VLj/84lfAagFxPwAAgD8AAIC/fzwOPz7VLj/84lfAfzwOPwAAgL/84lfAagFxPz7VLj/84lfAfzwOPz7VLj/84lfAagFxPwAAgL/84lfAAACAPwAAgL8AAIA/agFxPwAAgD8AAIA/AACAPwAAgD8AAIA/agFxPwAAgL8AAIA/AACAPwAAgD8AAIC/agFxPwAAgD8AAIA/agFxPwAAgD8AAIC/AACAPwAAgD8AAIA/fzwOPwAAgL8AAIC/agFxPwAAgL8AAIA/agFxPwAAgL8AAIC/fzwOPwAAgL8AAIA/agFxPwAAgD8AAIA/fzwOPwAAgD/INLg/fzwOPwAAgD8AAIA/agFxPwAAgD/INLg/2/9vvwAAgD8AAIA/2/9vvwAAgL/INLg/2/9vvwAAgL8AAIA/2/9vvwAAgD/INLg/fzwOPwAAgD8AAIA/2/9vvwAAgD/INLg/2/9vvwAAgD8AAIA/fzwOPwAAgD/INLg/nnLsPq03Zr/INLg/fzwOPwAAgL/INLg/nnLsPgAAgL/INLg/fzwOP603Zr/INLg/rhVfv603Zr/INLg/nnLsPnwZbD/INLg/rhVfvwAAgL/INLg/fzwOP3wZbD/INLg/2/9vv603Zr/INLg/2/9vvwAAgL/INLg/2/9vv3wZbD/INLg/rhVfv3wZbD/INLg/2/9vvwAAgD/INLg/rhVfvwAAgD/INLg/nnLsPgAAgD/INLg/fzwOPwAAgD/INLg/nnLsPq03Zr/INLg/nnLsPnwZbD8kD6s/nnLsPnwZbD/INLg/nnLsPq03Zr8kD6s/rhVfv3wZbD8kD6s/nnLsPq03Zr8kD6s/rhVfv603Zr8kD6s/nnLsPnwZbD8kD6s/rhVfv603Zr/INLg/nnLsPq03Zr8kD6s/nnLsPq03Zr/INLg/rhVfv603Zr8kD6s/nnLsPnwZbD/INLg/rhVfv3wZbD8kD6s/rhVfv3wZbD/INLg/nnLsPnwZbD8kD6s/rhVfv3wZbD/INLg/rhVfv603Zr8kD6s/rhVfv603Zr/INLg/rhVfv3wZbD8kD6s/fzwOPwAAgD/INLg/agFxPwAAgL/INLg/agFxPwAAgD/INLg/fzwOPwAAgL/INLg/fzwOPwAAgD+E/8c/agFxPwAAgL+E/8c/fzwOPwAAgL+E/8c/agFxPwAAgD+E/8c/fzwOPwAAgL/INLg/agFxPwAAgL+E/8c/agFxPwAAgL/INLg/fzwOPwAAgL+E/8c/agFxPwAAgL/INLg/agFxPwAAgD+E/8c/agFxPwAAgD/INLg/agFxPwAAgL+E/8c/fzwOPwAAgD/INLg/fzwOPwAAgL+E/8c/fzwOPwAAgL/INLg/fzwOPwAAgD+E/8c/agFxPwAAgD/INLg/fzwOPwAAgD+E/8c/fzwOPwAAgD/INLg/agFxPwAAgD+E/8c/AAD/f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//3///wAA/3//f///AAD/f/9///8AAP9//3///////3//fwCA////f/9/AID///9//38AgP///3//fwCA/3//fwAA/7//f/9/AAD/v/9//38AAP+//3//fwAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/////84AWK//////zgBYr//////OAFiv/////84AWK//////////7//////////v/////////+//////////7////9//38AgP///3//fwCA////f/9/AID///9//38AgBSP//////+/FI///////78Uj///////vxSP//////+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//////////v/////////+//////////7//////////v/9///////+//3///////7//f///////v/9///////+/////f/9//7////9//3//v////3//f/+/////f/9//7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/vxSP//////+/FI///////78Uj///////vxSP//////+//////////7//////////v/////////+//////////7//f/9/AAD/v/9//38AAP+//3//fwAA/7//f/9/AAD/v/9///////+//3///////7//f///////v/9///////+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f///////v/9///////+//3///////7//f///////vwAA/3//////AAD/f/////8AAP9//////wAA/3///////3///////7//f///////v/9///////+//3///////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f///////v/9///////+//3///////7//f///////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/////f////7////9/////v////3////+/////f////7//////AAD/P/////8AAP8//////wAA/z//////AAD/P/9//38AAP+//3//fwAA/7//f/9/AAD/v/9//38AAP+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7////9/////v////3////+/////f////7////9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+//3///////7//f///////v/9///////+//3///////78=")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_hi6a0")
+shadow_mesh = SubResource("ArrayMesh_rga7q")
 
 [sub_resource type="QuadMesh" id="QuadMesh_munwf"]
 
@@ -269,7 +269,7 @@ shader_parameter/line_threshold = 0.5
 _data = [Vector2(0.005376339, 0), 0.0, 0.0, 0, 0, Vector2(0.20967743, 0.9910715), 0.0, 0.0, 0, 0, Vector2(0.6989248, 0.9642858), 0.0, 0.0, 0, 0, Vector2(0.9892473, 0.044642925), -1.8932148, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_3ykuj"]
+[sub_resource type="CurveTexture" id="CurveTexture_xdu5l"]
 curve = SubResource("Curve_h51cr")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h51cr"]
@@ -286,18 +286,18 @@ damping_max = 4.721
 use_scale_3d = true
 scale_3d_min = Vector3(0.1, 0.1, 0.1)
 scale_3d_max = Vector3(0.4, 0.4, 0.4)
-scale_curve = SubResource("CurveTexture_3ykuj")
+scale_curve = SubResource("CurveTexture_xdu5l")
 turbulence_noise_scale = 6.305
 
-[sub_resource type="Gradient" id="Gradient_e3uxt"]
+[sub_resource type="Gradient" id="Gradient_46cpx"]
 colors = PackedColorArray(0.36862746, 0.36862746, 0.36862746, 1, 0.011764706, 0.011764706, 0.011764706, 0.2509804)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kcdkn"]
-gradient = SubResource("Gradient_e3uxt")
+gradient = SubResource("Gradient_46cpx")
 fill = 2
 fill_from = Vector2(0.5105042, 0.52310926)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghoj8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ban3q"]
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
@@ -305,7 +305,7 @@ shading_mode = 0
 albedo_texture = SubResource("GradientTexture2D_kcdkn")
 
 [sub_resource type="QuadMesh" id="QuadMesh_ajw17"]
-material = SubResource("StandardMaterial3D_ghoj8")
+material = SubResource("StandardMaterial3D_ban3q")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ycwkd"]
 emission_shape = 1
@@ -321,11 +321,11 @@ damping_max = 4.721
 use_scale_3d = true
 scale_3d_min = Vector3(0.1, 0.1, 0.1)
 scale_3d_max = Vector3(0.2, 0.2, 0.2)
-scale_curve = SubResource("CurveTexture_3ykuj")
+scale_curve = SubResource("CurveTexture_xdu5l")
 turbulence_noise_scale = 6.305
 
 [sub_resource type="QuadMesh" id="QuadMesh_88age"]
-material = SubResource("StandardMaterial3D_ghoj8")
+material = SubResource("StandardMaterial3D_ban3q")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x2olw"]
 animations = [{
@@ -371,7 +371,7 @@ shader_parameter/line_threshold = 0.5
 _data = [Vector2(0.005376339, 0), 0.0, 0.0, 0, 0, Vector2(0.20967743, 0.9910715), 0.0, 0.0, 0, 0, Vector2(0.6989248, 0.9642858), 0.0, 0.0, 0, 0, Vector2(0.9892473, 0.044642925), -1.8932148, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_eo1xk"]
+[sub_resource type="CurveTexture" id="CurveTexture_8u370"]
 curve = SubResource("Curve_e75v4")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rga7q"]
@@ -388,18 +388,18 @@ damping_max = 4.721
 use_scale_3d = true
 scale_3d_min = Vector3(0.1, 0.1, 0.1)
 scale_3d_max = Vector3(0.4, 0.4, 0.4)
-scale_curve = SubResource("CurveTexture_eo1xk")
+scale_curve = SubResource("CurveTexture_8u370")
 turbulence_noise_scale = 6.305
 
-[sub_resource type="Gradient" id="Gradient_18clu"]
+[sub_resource type="Gradient" id="Gradient_6oujy"]
 colors = PackedColorArray(0.36862746, 0.36862746, 0.36862746, 1, 0.011764706, 0.011764706, 0.011764706, 0.2509804)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hi6a0"]
-gradient = SubResource("Gradient_18clu")
+gradient = SubResource("Gradient_6oujy")
 fill = 2
 fill_from = Vector2(0.5105042, 0.52310926)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4wdv8"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eo1xk"]
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
@@ -407,7 +407,7 @@ shading_mode = 0
 albedo_texture = SubResource("GradientTexture2D_hi6a0")
 
 [sub_resource type="QuadMesh" id="QuadMesh_18clu"]
-material = SubResource("StandardMaterial3D_4wdv8")
+material = SubResource("StandardMaterial3D_eo1xk")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4wdv8"]
 emission_shape = 1
@@ -423,11 +423,11 @@ damping_max = 4.721
 use_scale_3d = true
 scale_3d_min = Vector3(0.1, 0.1, 0.1)
 scale_3d_max = Vector3(0.2, 0.2, 0.2)
-scale_curve = SubResource("CurveTexture_eo1xk")
+scale_curve = SubResource("CurveTexture_8u370")
 turbulence_noise_scale = 6.305
 
 [sub_resource type="QuadMesh" id="QuadMesh_d46x8"]
-material = SubResource("StandardMaterial3D_4wdv8")
+material = SubResource("StandardMaterial3D_eo1xk")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3tohc"]
 shader = ExtResource("23_kpybi")
@@ -457,6 +457,7 @@ land_sounds = Array[AudioStream]([ExtResource("3_navra"), ExtResource("5_fh13f")
 wall_hit_sounds = Array[AudioStream]([ExtResource("6_rup4s"), ExtResource("7_4kbfs"), ExtResource("8_f17e3"), ExtResource("9_x2olw")])
 camera_snap_sound = ExtResource("13_pm21f")
 flash_color_rect = NodePath("../Flash/ColorRect")
+CAMERA_LOWER_OFFSET = 2.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=629263152]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -473,7 +474,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5990729, 0)
 [node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=1278860105]
 
 [node name="Main_Camera" type="Node3D" parent="Player/Head/Camera3D" unique_id=176484448 node_paths=PackedStringArray("camera_viewport", "screen_mesh", "flash_color_rect", "photo_shapecast", "photo_raycast", "crosshair", "zoom_camera", "stun_light", "repel_light", "reveal_light", "mode_label")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32300186, -1.4890137, -0.2250061)
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, -0.323, -1.489, -0.3)
 script = ExtResource("11_xgqkh")
 SWAY_AMOUNT = 0.008
 STRAFE_ROLL_AMOUNT = 0.01
@@ -486,6 +487,8 @@ capture_sound = ExtResource("12_f17e3")
 shutter_sound = ExtResource("13_pm21f")
 crosshair = NodePath("../../../../UI/TextureRect")
 zoom_camera = NodePath("..")
+ZOOM_FOV = 45.0
+ZOOM_SPEED = 8.0
 zoom_sound = ExtResource("13_ggc52")
 cycle_sound = ExtResource("14_l8ah6")
 stun_light = NodePath("stunl")
@@ -568,27 +571,8 @@ stream = ExtResource("13_pm21f")
 
 [node name="MainTimer" parent="UI" unique_id=203433636 instance=ExtResource("6_7iits")]
 timeout_sound = ExtResource("7_oo54l")
-
-[node name="winlabel" type="RichTextLabel" parent="UI" unique_id=1823368311]
-process_mode = 3
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -325.0
-offset_right = 576.0
-offset_bottom = 325.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 4
-bbcode_enabled = true
-text = "[font_size=52][rainbow freq=1.0 sat=0.8 val=0.8]You Win !!![/rainbow]
-"
-horizontal_alignment = 1
-vertical_alignment = 1
+deduction_sound = ExtResource("19_e75v4")
+flash_duration = 2.0
 
 [node name="ProximityLabel" type="RichTextLabel" parent="UI" unique_id=1231504738]
 anchors_preset = 7
@@ -1556,5 +1540,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="PauseMenu" parent="." unique_id=353940448 instance=ExtResource("40_e75v4")]

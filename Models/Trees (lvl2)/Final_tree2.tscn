@@ -2,9 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dppa3wg342q4a" path="res://Models/Trees (lvl2)/tree34.png" id="1_tsu1b"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4qk4q"]
-height = 10.383301
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iglvc"]
 transparency = 2
 alpha_scissor_threshold = 0.5
@@ -52,15 +49,19 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_33y0r")
 
-[node name="Trees2" type="StaticBody3D" unique_id=984764705]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pd2gf"]
+height = 11.734
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1200500428]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6606903, 0)
-shape = SubResource("CapsuleShape3D_4qk4q")
+[node name="tree08" type="Node3D" unique_id=210521604]
 
-[node name="tree08" type="Node3D" parent="." unique_id=1305113165]
-
-[node name="tree08" type="MeshInstance3D" parent="tree08" unique_id=159078268]
+[node name="tree09" type="MeshInstance3D" parent="." unique_id=950248255]
 transform = Transform3D(1, 0, 0, 0, 1, 1.6292067e-07, 0, -1.6292067e-07, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_iglvc")
 mesh = SubResource("ArrayMesh_ytfxv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="tree09" unique_id=184620552]
+transform = Transform3D(1, 0, 0, 0, 1, -1.6292067e-07, 0, 1.6292067e-07, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="tree09/StaticBody3D" unique_id=1978796845]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5503755, 0)
+shape = SubResource("CapsuleShape3D_pd2gf")

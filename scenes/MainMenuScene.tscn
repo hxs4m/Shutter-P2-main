@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://c6loh52hx3auc" path="res://sfx/friend_join.wav" id="3_17sr7"]
 [ext_resource type="Shader" uid="uid://d3gc457gpcdt4" path="res://addons/godot_retro/shaders/standard/crt_complex.gdshader" id="3_47rn7"]
 [ext_resource type="AudioStream" uid="uid://u56itp0ylbgp" path="res://sfx/ambience5.wav" id="4_47rn7"]
-[ext_resource type="PackedScene" uid="uid://u7pvin73qtj4" path="res://scenes/settings_menu.tscn" id="7_pi2b6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mlkpy"]
 shader = ExtResource("2_lrn60")
@@ -43,9 +42,6 @@ color = Color(0, 0, 1, 1)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=535556747]
 
 [node name="UI_Layer" type="CanvasLayer" parent="CanvasLayer" unique_id=879151818]
-
-[node name="SettingsMenu" parent="CanvasLayer/UI_Layer" unique_id=1989262986 instance=ExtResource("7_pi2b6")]
-unique_name_in_owner = true
 
 [node name="DisclaimerLayer" type="Control" parent="CanvasLayer/UI_Layer" unique_id=109377223]
 unique_name_in_owner = true
@@ -105,10 +101,6 @@ grow_vertical = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
-
-[node name="SettingsButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=1211894244]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="ExitButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=144681088]
 unique_name_in_owner = true
