@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="SHUTTER"
-run/main_scene="uid://bic87uyeufp3x"
+run/main_scene="uid://dd54gmfqytqbg"
 config/features=PackedStringArray("4.7", "Forward Plus")
-run/max_fps=60
+run/max_fps=40
 
 [autoload]
 

@@ -13,7 +13,7 @@ extends Control
 @export var scene_transition_fade_time: float = 1.0  # Slow fade out duration when PLAY is clicked
 @export var fade_steps: int = 4  # Lower steps = choppier retro fade (PS1 style)
 
-const DISCLAIMER_1 := "All features of this build are subject to change.\nThis is a prototype."
+const DISCLAIMER_1 := "The Usage Of Headphones Is Advised."
 const DISCLAIMER_2 := "WARNING:\nThis game contains disturbing imagery and loud noises."
 const CONTROLS_TEXT := "CONTROLS:\nWASD - Movement\nShift - Sprint\nLeft Click - Snap\nSpace - Jump\n* Note: Timed jumps result in bhopping"
 
@@ -24,7 +24,10 @@ const CONTROLS_TEXT := "CONTROLS:\nWASD - Movement\nShift - Sprint\nLeft Click -
 
 @onready var menu_layer: Control = %MenuLayer
 @onready var play_button: Button = %PlayButton
+@onready var settings_button: Button = %SettingsButton
 @onready var exit_button: Button = %ExitButton
+
+@onready var settings_menu: Control = %SettingsMenu
 
 # Internal Audio Player & Controls Reference
 var _audio_player: AudioStreamPlayer
@@ -40,6 +43,8 @@ func _ready() -> void:
 	# Hide menu & show disclaimers initially
 	menu_layer.visible = false
 	disclaimer_layer.visible = true
+	if settings_menu:
+		settings_menu.visible = false
 	
 	# Create controls label programmatically inside MenuLayer
 	_create_controls_label()
@@ -50,7 +55,13 @@ func _ready() -> void:
 	disclaimer_label.add_theme_font_size_override("font_size", 36)
 	
 	play_button.pressed.connect(_on_play_pressed)
+	settings_button.pressed.connect(_on_settings_pressed)
 	exit_button.pressed.connect(_on_exit_pressed)
+
+	# Automatically hook up the settings Back button to return to Main Menu
+	var back_btn = settings_menu.find_child("BackButton", true, false)
+	if back_btn:
+		back_btn.pressed.connect(_on_settings_closed)
 
 	_run_disclaimer_sequence()
 
@@ -134,9 +145,10 @@ func _style_buttons_retro() -> void:
 	bold_font.font_weight = 900 
 
 	play_button.text = "PLAY"
+	settings_button.text = "SETTINGS"
 	exit_button.text = "EXIT"
 
-	var buttons: Array[Button] = [play_button, exit_button]
+	var buttons: Array[Button] = [play_button, settings_button, exit_button]
 	
 	for btn in buttons:
 		btn.add_theme_stylebox_override("normal", style_normal)
@@ -184,6 +196,9 @@ func _stepped_fade_bg(rect: ColorRect, start_alpha: float, end_alpha: float, dur
 # BUTTON CALLBACKS
 # ============================================================
 func _on_play_pressed() -> void:
+	ScoreManager.total_overall_score = 0
+	ScoreManager.level_score = 0 
+	ScoreManager.reset_level_stats()
 	if _is_transitioning:
 		return
 	_is_transitioning = true
@@ -194,6 +209,21 @@ func _on_play_pressed() -> void:
 		get_tree().change_scene_to_file(main_level_scene)
 	else:
 		push_error("Main Menu: Main level scene file path is missing!")
+
+
+func _on_settings_pressed() -> void:
+	if _is_transitioning:
+		return
+	
+	menu_layer.visible = false
+	settings_menu.visible = true
+	if settings_menu.has_method("open_menu"):
+		settings_menu.open_menu()
+
+
+func _on_settings_closed() -> void:
+	settings_menu.visible = false
+	menu_layer.visible = true
 
 
 func _on_exit_pressed() -> void:

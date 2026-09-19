@@ -25,6 +25,13 @@ extends Node
 @export var glitch_intensity: float = 12.0  # Base shake multiplier for erratic timeout
 @export var teleport_chance: float = 0.35  # Frequency of full screen jumps during timeout
 
+# ---------------------------------------------------------------------------
+# 3. Intro Text Settings
+# ---------------------------------------------------------------------------
+@export var hide_intro_text: bool = false  # Check this in the Inspector to force blank text on specific levels
+@export var use_random_blank: bool = true  # Set to true to automatically calculate the 1/5 chance
+@export_range(0.0, 1.0) var random_blank_chance: float = 0.20  # 0.20 = 20% (1/5) chance
+
 @onready var time_display: RichTextLabel = $TimeDisplay
 @onready var timer: Timer = $Timer
 
@@ -88,7 +95,9 @@ func _ready() -> void:
 	time_display.add_theme_constant_override('shadow_outline_size', 6)
 
 	time_display.modulate.a = 0.0
-	time_display.text = '[center]FIND THE DOOR[/center]'
+	
+	# Set the initial intro text (either "FIND THE DOOR" or blank)
+	time_display.text = '[center]%s[/center]' % _get_intro_text()
 
 	timer.wait_time = max(0.001, total_duration)
 	timer.one_shot = true
@@ -99,6 +108,14 @@ func _ready() -> void:
 	if gaze_mgr and gaze_mgr.has_signal('look_away_resolved'):
 		if not gaze_mgr.look_away_resolved.is_connected(_on_player_death):
 			gaze_mgr.look_away_resolved.connect(_on_player_death)
+
+
+func _get_intro_text() -> String:
+	if hide_intro_text:
+		return ""
+	if use_random_blank and randf() < random_blank_chance:
+		return ""
+	return "FIND THE DOOR"
 
 
 func _process(delta: float) -> void:
@@ -324,7 +341,7 @@ func reset_for_next_level() -> void:
 		time_display.modulate.a = 0.0
 		time_display.self_modulate = Color(0.85, 0.90, 0.85, 1.0)
 		time_display.add_theme_font_size_override('normal_font_size', 48)
-		time_display.text = '[center]FIND THE DOOR[/center]'
+		time_display.text = '[center]%s[/center]' % _get_intro_text()
 		time_display.position = Vector2(0.0, 50.0)
 
 	_intro_phase = 0

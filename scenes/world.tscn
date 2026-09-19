@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://eb61ht82or2a" path="res://Abstract Pics/Screenshot 2026-09-13 205505.png" id="32_x2olw"]
 [ext_resource type="Texture2D" uid="uid://cyhou8nrmi1x" path="res://Abstract Pics/Screenshot 2026-09-13 205601.png" id="33_817gm"]
 [ext_resource type="Texture2D" uid="uid://balrrjm4i436p" path="res://Abstract Pics/Screenshot 2026-09-13 205623.png" id="34_ggc52"]
+[ext_resource type="PackedScene" uid="uid://c2gttej6xpevh" path="res://scenes/lvl_2.tscn" id="37_8u370"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3enge"]
 
@@ -609,12 +610,13 @@ texture = ExtResource("17_f17e3")
 
 [node name="ScoreMenu" parent="UI" unique_id=519869161 instance=ExtResource("18_x2olw")]
 
-[node name="ModeLabel" type="Label" parent="UI" unique_id=665013820]
+[node name="ModeLabel" type="Label" parent="UI" unique_id=948626581]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
+offset_left = 57.0
 offset_top = -82.0
-offset_right = 185.53534
+offset_right = 242.53534
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("19_817gm")
 theme_override_font_sizes/font_size = 28
@@ -1502,13 +1504,11 @@ offset_right = 1152.0
 offset_bottom = 651.0
 mouse_filter = 2
 
-[node name="Door1" parent="." unique_id=1959704681 node_paths=PackedStringArray("glitch_audio_player") instance=ExtResource("21_7iits")]
+[node name="Door1" parent="." unique_id=1959704681 instance=ExtResource("21_7iits")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.167833, 339.40762, -111.290474)
-glitch_audio_player = NodePath("AudioStreamPlayer")
-glitch_duration = 6.0
-proximity_distance = 500.0
-next_level_path = "uid://c2gttej6xpevh"
-post_win_delay = 2.0
+next_level_scene = ExtResource("37_8u370")
+show_score_menu = false
+post_win_delay = 0.1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Door1" unique_id=1282936160]
 stream = ExtResource("21_oo54l")

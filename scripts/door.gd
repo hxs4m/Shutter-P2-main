@@ -6,10 +6,7 @@ extends Area3D
 @export var glitch_audio_player: AudioStreamPlayer
 @export var camera: Camera3D
 
-@export_group("Timing & Glitch Settings")
-@export var glitch_duration: float = 3.0
-@export var tick_tock_interval: float = 1.0
-@export var shake_intensity: float = 0.2
+@export_group("Glitch Settings")
 @export var number_of_twentytwos: int = 18
 
 @export_group("Proximity Settings")
@@ -24,7 +21,9 @@ extends Area3D
 ]
 
 @export_group("Level Transition Options")
-@export_file("*.tscn") var next_level_path: String
+@export var next_level_scene: PackedScene  # Drag & drop scene file directly here
+@export_file("*.tscn") var next_level_path: String  # Or pick scene file path here
+@export var show_score_menu: bool = true  # Toggle score menu on/off for this door
 @export var post_win_delay: float = 2.5
 
 var _spawned_labels: Array[Control] = []
@@ -60,14 +59,14 @@ func _ready() -> void:
 	if win_label:
 		win_label.visible = false
 
+	if proximity_label == null:
+		var ui = get_tree().root.find_child("UI", true, false)
+		if ui and ui.has_node("ProximityLabel"):
+			proximity_label = ui.get_node("ProximityLabel") as RichTextLabel
 
 	if proximity_label:
 		proximity_label.visible = false
 
-	if proximity_label == null:
-			var ui = get_tree().root.find_child("UI", true, false)
-			if ui and ui.has_node("ProximityLabel"):
-				proximity_label = ui.get_node("ProximityLabel") as RichTextLabel
 
 func _process(delta: float) -> void:
 	if _has_triggered:
@@ -134,87 +133,53 @@ func _on_body_entered(body: Node3D) -> void:
 		_has_triggered = true
 		print("🏆 Player reached the exit!")
 
-		# --- NEW: GRAB TIME AND CALCULATE SCORE ---
+		# --- GRAB TIME AND CALCULATE SCORE ---
 		var timers = get_tree().get_nodes_in_group("MainTimer")
 		var remaining_time = 0.0
 		if timers.size() > 0:
-			remaining_time = timers[0].timer.time_left # Read the clock
+			remaining_time = timers[0].timer.time_left
 		
 		ScoreManager.calculate_final_score(remaining_time)
-		# ------------------------------------------
 
-		get_tree().call_group("MainTimer", "hide_timer") # Your original code
+		get_tree().call_group("MainTimer", "hide_timer")
 
 		body_entered.disconnect(_on_body_entered)
 		
 		if proximity_label:
 			proximity_label.visible = false
 
-		_trigger_glitch_sequence(body)
+		_trigger_glitch_sequence()
 
 
-func _trigger_glitch_sequence(player: Node3D) -> void:
+func _trigger_glitch_sequence() -> void:
 	if glitch_audio_player:
 		glitch_audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 		glitch_audio_player.play()
 
+	get_tree().paused = true
+
 	if win_label:
 		win_label.process_mode = Node.PROCESS_MODE_ALWAYS
 		win_label.visible = true
-
-	get_tree().paused = true
-	
-	var elapsed: float = 0.0
-	var toggle_tick_tock: bool = false
-	
-	var original_cam_h_offset: float = camera.h_offset if camera else 0.0
-	var original_cam_v_offset: float = camera.v_offset if camera else 0.0
-	
-	var stuck_h_offset: float = shake_intensity if randf() > 0.5 else -shake_intensity
-	var stuck_v_offset: float = shake_intensity if randf() > 0.5 else -shake_intensity
-
-	while elapsed < glitch_duration:
-		toggle_tick_tock = !toggle_tick_tock
-		
-		if win_label:
-			if toggle_tick_tock:
-				win_label.text = "[center][font_size=64][shake rate=40.0 level=25][color=red]T I C K[/color][/shake][/font_size][/center]"
-			else:
-				win_label.text = "[center][font_size=64][shake rate=40.0 level=25][color=red]T O C K[/color][/shake][/font_size][/center]"
-
-		if camera:
-			camera.h_offset = original_cam_h_offset + stuck_h_offset
-			camera.v_offset = original_cam_v_offset + stuck_v_offset
-
-		await get_tree().create_timer(tick_tock_interval, true, false, true).timeout
-		elapsed += tick_tock_interval
-
-	if camera:
-		camera.h_offset = original_cam_h_offset
-		camera.v_offset = original_cam_v_offset
-
-	# --- MODIFIED: Replaced '22' text loop with a glitched Win State text ---
-	if win_label:
 		win_label.text = "[center][font_size=80][shake rate=50.0 level=20][color=beige]Y O U  W I N[/color][/shake][/font_size][/center]"
 
 	_spawn_haphazard_twentytwos()
 
-# Pause momentarily on the glitched win text
+	# Pause momentarily on win text
 	await get_tree().create_timer(post_win_delay, true, false, true).timeout
 	
-	# --- NEW: SHOW SCORE MENU AND WAIT ---
-	# (Assuming you put your ScoreMenu inside your UI node)
-	var ui = get_tree().root.find_child("UI", true, false)
-	if ui and ui.has_node("ScoreMenu"):
-		var score_menu = ui.get_node("ScoreMenu")
-		score_menu.show_score()
-		
-		# Wait right here until the player clicks the "Proceed" button!
-		await score_menu.next_level_button.pressed 
-	# -------------------------------------
+	# --- OPTIONAL SCORE MENU ---
+	if show_score_menu:
+		var ui = get_tree().root.find_child("UI", true, false)
+		if ui and ui.has_node("ScoreMenu"):
+			var score_menu = ui.get_node("ScoreMenu")
+			score_menu.show_score()
+			
+			# Wait until player presses "Proceed"
+			await score_menu.next_level_button.pressed 
 
-	# After they click proceed, carry out the world scene swap
-	_cleanup_and_swap_scenes(player)
+	# Carry out scene swap
+	_cleanup_and_swap_scenes()
 
 
 func _spawn_haphazard_twentytwos() -> void:
@@ -243,9 +208,9 @@ func _spawn_haphazard_twentytwos() -> void:
 		parent_ui.add_child(lbl)
 		_spawned_labels.append(lbl)
 
-# --- Performs clean swap on the world tree nodes while preserving UI/Shaders ---
-func _cleanup_and_swap_scenes(player: Node3D) -> void:
-	# 1. Strip out the glitched label elements from the screen
+
+func _cleanup_and_swap_scenes() -> void:
+	# 1. Clean up glitched labels from current UI
 	for lbl in _spawned_labels:
 		if is_instance_valid(lbl):
 			lbl.queue_free()
@@ -255,63 +220,17 @@ func _cleanup_and_swap_scenes(player: Node3D) -> void:
 		win_label.visible = false
 		win_label.text = ""
 
-	# 2. Unpause the engine so the new map elements can initialize safely
+	# 2. Unpause engine before loading the new scene
 	get_tree().paused = false
 
-	# 3. Find the master world root node scene
-	var world_root = get_tree().current_scene
-	if not world_root:
-		push_error("Transition Failed: Current active scene tree root could not be located.")
-		return
-
-	# 4. Wipe out the old level node layout cleanly
-	var old_level = world_root.get_node_or_null("lvl0fn")
-	if old_level:
-		old_level.queue_free()
-
-	# 5. Bring in and instance the second map layout data structure
-	if next_level_path == "":
-		push_error("Transition Failed: No map file path assigned in Next Level Path export slot!")
-		return
-		
-	var target_scene_resource = load(next_level_path)
-	if target_scene_resource:
-		var new_map_instance = target_scene_resource.instantiate()
-		new_map_instance.name = "lvl0fn"
-		world_root.add_child(new_map_instance)
-
-		# 6. Teleport the player node to the spawn destination marker setup inside Map 2
-		var target_marker = new_map_instance.get_node_or_null("SpawnPoint")
-		if target_marker:
-			player.global_transform = target_marker.global_transform
-		else:
-			player.global_position = Vector3.ZERO
-			push_warning("Transition Notice: No 'SpawnPoint' Marker3D node found inside map file.")
-
-		# --- FIXED: CHECK TRUE FILE PATH USING THE LOADED RESOURCE ---
-		var true_path: String = target_scene_resource.resource_path
-		print("True target file path resolved: ", true_path)
-		
-		if "lvl_2" in true_path or "lvl2" in true_path or "level_2" in true_path or "level2" in true_path:
-			print(">> Level 2 matched via true path. Hiding dither shader container.")
-			var dither_node = world_root.find_child("dithershader", true, false)
-			if dither_node:
-				if "visible" in dither_node:
-					dither_node.visible = false
-				for child in dither_node.get_children():
-					if "visible" in child:
-						child.visible = false
-		else:
-			# Fallback: Turn it back on if transitioning to any other levels that need it
-			var dither_node = world_root.find_child("dithershader", true, false)
-			if dither_node:
-				if "visible" in dither_node:
-					dither_node.visible = true
-				for child in dither_node.get_children():
-					if "visible" in child:
-						child.visible = true
-
-	# 7. Locate and kickstart your MainTimer script system to start counting fresh
-	var timer_node = world_root.get_node_or_null("UI/MainTimer")
-	if timer_node and timer_node.has_method("reset_for_next_level"):
-		timer_node.reset_for_next_level()
+	# 3. Load the new scene directly (destroys current scene & player)
+	if next_level_scene:
+		var err = get_tree().change_scene_to_packed(next_level_scene)
+		if err != OK:
+			push_error("Transition Failed: Could not load assigned PackedScene. Error code: %d" % err)
+	elif next_level_path != "":
+		var err = get_tree().change_scene_to_file(next_level_path)
+		if err != OK:
+			push_error("Transition Failed: Could not load scene at path '%s'. Error code: %d" % [next_level_path, err])
+	else:
+		push_error("Transition Failed: No 'next_level_scene' or 'next_level_path' configured in Inspector!")

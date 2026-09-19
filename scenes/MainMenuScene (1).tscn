@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://btpgu61wi15yh"]
+
+[ext_resource type="Script" uid="uid://btwkv30i4kgs5" path="res://scripts/main_menu_scene.gd" id="1_o6rx4"]
+[ext_resource type="Shader" uid="uid://bqd77rg8wjoyf" path="res://addons/godot_retro/shaders/standard/dithering.gdshader" id="2_lrn60"]
+[ext_resource type="AudioStream" uid="uid://b4vla3y7chgdw" path="res://sfx/buttonclick.wav" id="2_mlkpy"]
+[ext_resource type="AudioStream" uid="uid://c6loh52hx3auc" path="res://sfx/friend_join.wav" id="3_17sr7"]
+[ext_resource type="Shader" uid="uid://d3gc457gpcdt4" path="res://addons/godot_retro/shaders/standard/crt_complex.gdshader" id="3_47rn7"]
+[ext_resource type="AudioStream" uid="uid://u56itp0ylbgp" path="res://sfx/ambience5.wav" id="4_47rn7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mlkpy"]
+shader = ExtResource("2_lrn60")
+shader_parameter/COLOR_FACTOR = 10.0
+shader_parameter/DITHERING_STRENTH = 0.07000000029802
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_17sr7"]
+shader = ExtResource("3_47rn7")
+shader_parameter/blur_amount = 2.000000095
+shader_parameter/signal_quality = 0.3
+shader_parameter/bottom_strenth = 0.0
+
+[node name="MainMenuScene" type="Control" unique_id=1556253641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o6rx4")
+main_level_scene = "uid://bic87uyeufp3x"
+hover_sound = ExtResource("2_mlkpy")
+click_sound = ExtResource("3_17sr7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=76671012]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 1, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=535556747]
+
+[node name="UI_Layer" type="CanvasLayer" parent="CanvasLayer" unique_id=879151818]
+
+[node name="DisclaimerLayer" type="Control" parent="CanvasLayer/UI_Layer" unique_id=109377223]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DisclaimerBackground" type="ColorRect" parent="CanvasLayer/UI_Layer/DisclaimerLayer" unique_id=1594421829]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DisclaimerLabel" type="Label" parent="CanvasLayer/UI_Layer/DisclaimerLayer" unique_id=1417389530]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 42
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuLayer" type="Control" parent="CanvasLayer" unique_id=1544852680]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuLayer" unique_id=2095232888]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=63222886]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=144681088]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1057679575]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=1874388004]
+material = SubResource("ShaderMaterial_mlkpy")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=905642948]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer3" unique_id=1286063264]
+material = SubResource("ShaderMaterial_17sr7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=775179656]
+stream = ExtResource("4_47rn7")
+volume_db = -6.537
+autoplay = true

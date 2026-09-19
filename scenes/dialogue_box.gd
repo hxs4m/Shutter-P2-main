@@ -9,7 +9,7 @@ extends CanvasLayer
 @export var enter_sound: AudioStream
 @export var font: Font                       # optional, engine default looks fine (GMod uses Tahoma-ish)
 @export var font_size: int = 15
-@export var bottom_margin: int = 40
+@export var bottom_margin: int = 220
 @export var left_margin: int = 20
 @export var line_spacing: int = 4
 @export var fade_time: float = 0.2           # snappy fade, no PS1 stepping
