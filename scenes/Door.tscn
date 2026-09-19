@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://clp76l45dqdvc"]
+
+[ext_resource type="Script" uid="uid://cdf4sslcwylnx" path="res://scripts/door.gd" id="1_eyv6f"]
+[ext_resource type="PackedScene" uid="uid://dslhs1u0jn5p4" path="res://Models/Lvl0/Door/low-poly_door.glb" id="1_yfgsh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2074x"]
+size = Vector3(1.3374634, 1.9067383, 1)
+
+[node name="Area3D" type="Area3D" unique_id=1959704681]
+script = ExtResource("1_eyv6f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2029119049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.020843506, 1.189149, 0)
+shape = SubResource("BoxShape3D_2074x")
+
+[node name="Sketchfab_Scene" parent="." unique_id=944660674 instance=ExtResource("1_yfgsh")]

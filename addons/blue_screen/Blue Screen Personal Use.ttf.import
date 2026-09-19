@@ -1,0 +1,36 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://cxmryk4xl1gq1"
+path="res://.godot/imported/Blue Screen Personal Use.ttf-ff37a47b3a5ff8e1c45eacd58f27dd56.fontdata"
+
+[deps]
+
+source_file="res://addons/blue_screen/Blue Screen Personal Use.ttf"
+dest_files=["res://.godot/imported/Blue Screen Personal Use.ttf-ff37a47b3a5ff8e1c45eacd58f27dd56.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+modulate_color_glyphs=false
+hinting=3
+subpixel_positioning=4
+keep_rounding_remainders=true
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

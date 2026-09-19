@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://d0ckw6vvjrw8e"]
+
+[ext_resource type="Script" uid="uid://cswruk8q7khiy" path="res://scripts/enemy1.gd" id="1_55jtl"]
+[ext_resource type="AudioStream" uid="uid://np8clvx8e4yg" path="res://sfx/freesound_community-scared_breathing1-83103.mp3" id="2_mpr68"]
+[ext_resource type="AudioStream" uid="uid://c25vox6g5u348" path="res://sfx/heartbeat1.wav" id="3_ft8do"]
+[ext_resource type="Texture2D" uid="uid://insl01wjulme" path="res://Models/entity1/npc_shadow_guy.png" id="4_ft8do"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2074x"]
+height = 3.9570618
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=777917025]
+slide_on_ceiling = false
+wall_min_slide_angle = 0.0
+script = ExtResource("1_55jtl")
+chase_speed = 16.0
+max_spotting_distance = 100.0
+spot_reaction_delay = 0.5
+catch_sounds = Array[AudioStream]([ExtResource("2_mpr68"), ExtResource("3_ft8do")])
+ghost_lifetime = 1.405
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1966169500]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5878319, 0)
+billboard = 1
+texture = ExtResource("4_ft8do")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1716127394]
+transform = Transform3D(1.325, 0, 0, 0, 1.325, 0, 0, 0, 1.325, 0, 1.8125978, 0)
+shape = SubResource("CapsuleShape3D_2074x")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=192431802]
+avoidance_enabled = true
+radius = 0.8
+neighbor_distance = 10.0
+use_3d_avoidance = true
+debug_path_custom_point_size = 4.6
+
+[node name="VisionRay" type="RayCast3D" parent="." unique_id=550401468]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09060067, 0)
+
+[node name="CatchAudioPlayer" type="AudioStreamPlayer" parent="." unique_id=484928564]

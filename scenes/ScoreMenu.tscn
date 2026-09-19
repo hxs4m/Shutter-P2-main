@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://ccwjniyplswd0"]
+
+[ext_resource type="Script" uid="uid://5ssylt8w4wq5" path="res://scenes/scoreui.gd" id="1_25qii"]
+[ext_resource type="FontFile" uid="uid://g88wb340lwpj" path="res://textures/HomeVideo-Regular.ttf" id="2_4ggwn"]
+
+[sub_resource type="Theme" id="Theme_4ggwn"]
+default_font = ExtResource("2_4ggwn")
+default_font_size = 26
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
+Label/constants/outline_size = 2
+Label/fonts/font = ExtResource("2_4ggwn")
+
+[node name="ScoreMenu" type="CanvasLayer" unique_id=519869161]
+process_mode = 3
+script = ExtResource("1_25qii")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1727825554]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="CenterContainer" type="CenterContainer" parent="Background" unique_id=669624104]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_4ggwn")
+
+[node name="MainColumn" type="VBoxContainer" parent="Background/CenterContainer" unique_id=107256016]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="RichTextLabel" parent="Background/CenterContainer/MainColumn" unique_id=575103862]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
+[node name="Divider1" type="HSeparator" parent="Background/CenterContainer/MainColumn" unique_id=676693120]
+layout_mode = 2
+
+[node name="ScoreGrid" type="GridContainer" parent="Background/CenterContainer/MainColumn" unique_id=1568582699]
+layout_mode = 2
+columns = 3
+
+[node name="Divider2" type="HSeparator" parent="Background/CenterContainer/MainColumn" unique_id=951991451]
+layout_mode = 2
+
+[node name="LevelTotalLabel" type="RichTextLabel" parent="Background/CenterContainer/MainColumn" unique_id=1177180269]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
+[node name="OverallTotalLabel" type="RichTextLabel" parent="Background/CenterContainer/MainColumn" unique_id=1301087752]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
+[node name="NextLevelButton" type="Button" parent="Background/CenterContainer/MainColumn" unique_id=875464145]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "PROCEED"

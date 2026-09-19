@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://c30m1xqlbomhg"]
+
+[ext_resource type="PackedScene" uid="uid://c326uekpvfkdv" path="res://scenes/main_timer.tscn" id="1_yev5y"]
+[ext_resource type="AudioStream" uid="uid://dygls8agrvxhw" path="res://sfx/soundreality-glitch-effect-3-530928.mp3" id="2_gdt2y"]
+[ext_resource type="Script" uid="uid://b0lih3m4rhlrq" path="res://scenes/StaminaBar.gd" id="3_wm3ai"]
+
+[node name="UI" type="CanvasLayer" unique_id=1736322888]
+
+[node name="MainTimer" parent="." unique_id=203433636 instance=ExtResource("1_yev5y")]
+timeout_sound = ExtResource("2_gdt2y")
+
+[node name="winlabel" type="RichTextLabel" parent="." unique_id=1823368311]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -325.0
+offset_right = 576.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "[font_size=52][rainbow freq=1.0 sat=0.8 val=0.8]You Win !!![/rainbow]
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProximityLabel" type="RichTextLabel" parent="." unique_id=1231504738]
+anchors_preset = -1
+anchor_left = 0.52400005
+anchor_top = 0.96900004
+anchor_right = 0.52400005
+anchor_bottom = 0.96900004
+offset_left = -603.6481
+offset_top = -109.91205
+offset_right = 548.3519
+offset_bottom = 20.087952
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="StaminaBar" type="ProgressBar" parent="." unique_id=2000502754]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -162.0
+offset_top = -24.0
+offset_right = 162.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+show_percentage = false
+script = ExtResource("3_wm3ai")

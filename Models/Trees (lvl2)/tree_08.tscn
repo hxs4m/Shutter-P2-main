@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c00ihtjdefvtl"]
+
+[ext_resource type="PackedScene" uid="uid://bfowb31t1ejp2" path="res://Models/Trees (lvl2)/tree08.fbx" id="1_lm2a3"]
+[ext_resource type="Texture2D" uid="uid://dwkepfqd2g8y8" path="res://Models/Trees (lvl2)/tree28.png" id="2_krn0m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7kxd"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("2_krn0m")
+texture_filter = 2
+
+[node name="tree08" unique_id=1305113165 instance=ExtResource("1_lm2a3")]
+
+[node name="tree08" parent="." index="0" unique_id=27873693]
+material_override = SubResource("StandardMaterial3D_j7kxd")

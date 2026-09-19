@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dp82rxvrjnjec"]
+
+[sub_resource type="Curve" id="Curve_ctatt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.60215056, 0.7857144), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_r2wbw"]
+curve = SubResource("Curve_ctatt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iq8pr"]
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.5, 1)
+gravity = Vector3(0, -0.5, 0)
+radial_accel_min = -2.2351742e-06
+radial_accel_max = 1.0999978
+tangential_accel_min = -0.5000022
+tangential_accel_max = 0.59999776
+damping_max = 0.59000003
+use_scale_3d = true
+scale_3d_min = Vector3(0.1, 0.1, 0.1)
+scale_3d_max = Vector3(0.2, 0.2, 0.2)
+scale_curve = SubResource("CurveTexture_r2wbw")
+turbulence_noise_strength = 7.75
+turbulence_noise_speed_random = 4.0
+
+[sub_resource type="Gradient" id="Gradient_xgqkh"]
+offsets = PackedFloat32Array(0, 0.07911392, 0.22468354, 0.42088607)
+colors = PackedColorArray(0.95903736, 0.9255659, 0.4936139, 1, 0.95903736, 0.9255659, 0.4936139, 1, 0.95903736, 0.9255659, 0.4936139, 1, 0.46239305, 0.45465982, 0.1315535, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hyyc2"]
+gradient = SubResource("Gradient_xgqkh")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xnc1k"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_hyyc2")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2074x"]
+material = SubResource("StandardMaterial3D_xnc1k")
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=1757198236]
+transform = Transform3D(0.37169427, 0, 0, 0, 0.75547737, 0, 0, 0, 1, 0, 0, 0)
+cast_shadow = 0
+amount = 30
+lifetime = 5.0
+speed_scale = 0.25
+randomness = 1.0
+transform_align = 4
+transform_align_axis = 1
+process_material = SubResource("ParticleProcessMaterial_iq8pr")
+draw_pass_1 = SubResource("QuadMesh_2074x")
