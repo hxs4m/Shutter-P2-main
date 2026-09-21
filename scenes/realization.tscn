@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://7elnu0khwwgh"]
+
+[ext_resource type="Script" uid="uid://dtdc7ioqybtk6" path="res://realization_cutscene.gd" id="1_vtpmq"]
+[ext_resource type="PackedScene" uid="uid://dd54gmfqytqbg" path="res://scenes/MainMenuScene (2).tscn" id="2_b04sn"]
+[ext_resource type="Shader" uid="uid://d3gc457gpcdt4" path="res://addons/godot_retro/shaders/standard/crt_complex.gdshader" id="2_if8v1"]
+[ext_resource type="AudioStream" uid="uid://celw4nhg55pei" path="res://sfx/buttonclickrelease.wav" id="2_r4lmc"]
+[ext_resource type="AudioStream" uid="uid://dalyt3wd4yuen" path="res://sfx/buttonrollover.wav" id="3_b04sn"]
+[ext_resource type="AudioStream" uid="uid://bbshs2t71tg4e" path="res://sfx/cat-laugh-meme-1.mp3" id="5_gaa2w"]
+[ext_resource type="Texture2D" uid="uid://6bouu03gwfwy" path="res://sfx/cat-laughing-4-1040516773.jpg" id="6_0i1dy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4lmc"]
+shader = ExtResource("2_if8v1")
+shader_parameter/blur_amount = 0.910000043225
+shader_parameter/signal_quality = 0.3
+shader_parameter/bottom_strenth = 0.0
+
+[node name="Node3D" type="Node3D" unique_id=699870586]
+
+[node name="DialogueCutscene" type="CanvasLayer" parent="." unique_id=1751712666]
+script = ExtResource("1_vtpmq")
+next_level_scene = ExtResource("2_b04sn")
+chad_sfx = ExtResource("2_r4lmc")
+janitor_sfx = ExtResource("3_b04sn")
+laughing_cat_sfx = ExtResource("5_gaa2w")
+cat_sfx_volume = 0.3
+cat_emoji_texture = ExtResource("6_0i1dy")
+emoji_size = 64
+
+[node name="crtshader" type="CanvasLayer" parent="." unique_id=238674159]
+
+[node name="ColorRect" type="ColorRect" parent="crtshader" unique_id=377053029]
+material = SubResource("ShaderMaterial_r4lmc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

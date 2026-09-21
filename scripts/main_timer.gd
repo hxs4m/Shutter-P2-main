@@ -28,6 +28,8 @@ extends Node
 # ---------------------------------------------------------------------------
 # 3. Intro Text Settings
 # ---------------------------------------------------------------------------
+@export var show_intro_text: bool = true  # Toggle intro text on/off
+@export var intro_text: String = "FIND THE DOOR"  # Customizable intro message
 @export var hide_intro_text: bool = false  # Check this in the Inspector to force blank text on specific levels
 @export var use_random_blank: bool = true  # Set to true to automatically calculate the 1/5 chance
 @export_range(0.0, 1.0) var random_blank_chance: float = 0.20  # 0.20 = 20% (1/5) chance
@@ -58,6 +60,11 @@ func _ready() -> void:
 
 	if not is_in_group('MainTimer'):
 		add_to_group('MainTimer')
+
+	# --- PERSISTENT TIMER CHECK ---
+	# If time was saved from the previous level, override total_duration
+	if ScoreManager and ScoreManager.get("saved_time") != null and ScoreManager.saved_time > 0.0:
+		total_duration = ScoreManager.saved_time
 
 	time_display.bbcode_enabled = true
 
@@ -96,7 +103,7 @@ func _ready() -> void:
 
 	time_display.modulate.a = 0.0
 	
-	# Set the initial intro text (either "FIND THE DOOR" or blank)
+	# Set the initial intro text
 	time_display.text = '[center]%s[/center]' % _get_intro_text()
 
 	timer.wait_time = max(0.001, total_duration)
@@ -110,12 +117,17 @@ func _ready() -> void:
 			gaze_mgr.look_away_resolved.connect(_on_player_death)
 
 
+func save_time_for_next_level() -> void:
+	if is_instance_valid(timer) and not timer.is_stopped():
+		ScoreManager.saved_time = timer.time_left
+
+
 func _get_intro_text() -> String:
-	if hide_intro_text:
+	if not show_intro_text or hide_intro_text:
 		return ""
 	if use_random_blank and randf() < random_blank_chance:
 		return ""
-	return "FIND THE DOOR"
+	return intro_text
 
 
 func _process(delta: float) -> void:

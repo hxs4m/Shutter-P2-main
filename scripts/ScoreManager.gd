@@ -1,5 +1,6 @@
 extends Node
 
+var saved_time: float = -1.0
 var total_overall_score: int = 0
 var level_score: int = 0
 

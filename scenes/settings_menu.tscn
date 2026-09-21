@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4jql086c6djn" path="res://scripts/settings_menu.gd" id="1_05p07"]
 [ext_resource type="FontFile" uid="uid://bghs7isve4i5x" path="res://textures/CrimsonHorrorThree-9MdM5.ttf" id="1_cr101"]
+[ext_resource type="FontFile" uid="uid://g88wb340lwpj" path="res://textures/HomeVideo-Regular.ttf" id="3_wswnh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cr101"]
 
@@ -31,6 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_owc20")
 script = ExtResource("1_05p07")
+custom_font = ExtResource("3_wswnh")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1561509100]
 layout_mode = 1

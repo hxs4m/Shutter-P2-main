@@ -49,7 +49,7 @@
 [ext_resource type="AudioStream" uid="uid://mtiv5aqvv1hl" path="res://sfx/freesound_community-factory-fluorescent-light-buzz-6871.mp3" id="46_aegdx"]
 [ext_resource type="Texture2D" uid="uid://jo6klqigw5yd" path="res://textures/moon.png" id="48_e55sf"]
 [ext_resource type="Script" uid="uid://dobk0s05hij4r" path="res://scenes/screen_fade.gd" id="49_7kqa1"]
-[ext_resource type="PackedScene" uid="uid://c326uekpvfkdv" path="res://scenes/main_timer.tscn" id="50_m3eo5"]
+[ext_resource type="Script" uid="uid://cwjx0u0lo0nw5" path="res://scripts/main_timer.gd" id="50_wq80p"]
 [ext_resource type="AudioStream" uid="uid://dygls8agrvxhw" path="res://sfx/soundreality-glitch-effect-3-530928.mp3" id="51_4ol75"]
 [ext_resource type="Texture2D" uid="uid://c7uucwelkrbss" path="res://textures/crosshair1.png" id="52_5hqeq"]
 [ext_resource type="PackedScene" uid="uid://ccwjniyplswd0" path="res://scenes/ScoreMenu.tscn" id="53_u5fi6"]
@@ -58,6 +58,7 @@
 [ext_resource type="Script" uid="uid://cdf4sslcwylnx" path="res://scripts/door.gd" id="56_4ol75"]
 [ext_resource type="PackedScene" uid="uid://dslhs1u0jn5p4" path="res://Models/Lvl0/Door/low-poly_door.glb" id="57_5hqeq"]
 [ext_resource type="PackedScene" uid="uid://lvaoa0qcnhf6" path="res://scenes/lvl_4_fn.tscn" id="57_u5fi6"]
+[ext_resource type="AudioStream" uid="uid://tbb00llmnt2d" path="res://sfx/freesound_community-creepy-distortion-29539.mp3" id="57_wq80p"]
 [ext_resource type="Script" uid="uid://dq6aq1a1a4lbk" path="res://scripts/abstract_main.gd" id="59_wfxae"]
 [ext_resource type="Texture2D" uid="uid://eb61ht82or2a" path="res://Abstract Pics/Screenshot 2026-09-13 205505.png" id="60_f50j7"]
 [ext_resource type="Texture2D" uid="uid://cyhou8nrmi1x" path="res://Abstract Pics/Screenshot 2026-09-13 205601.png" id="61_ynljt"]
@@ -73,6 +74,8 @@ sky_material = SubResource("PanoramaSkyMaterial_aegdx")
 [sub_resource type="Environment" id="Environment_fk0w4"]
 background_mode = 2
 sky = SubResource("Sky_b2vgo")
+ambient_light_source = 2
+ambient_light_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o7npk"]
 albedo_color = Color(0.82947975, 0.8294798, 0.82947975, 1)
@@ -2298,7 +2301,7 @@ albedo_texture = ExtResource("20_6f5l0")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_1osul"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_yn13b"]
 _surfaces = [{
 "aabb": AABB(-0.8732674, -1, -1.0125436, 1.7392929, 2, 2.0125437),
 "format": 34896613377,
@@ -2328,7 +2331,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("d38AAAAAqer/////MkGp6oeA//+YAanq7v4AAJk/qeru/gAAmT//v/////9lwP+//////zJB/7/u/gAAzL7/v+7+AADMvlWVh4D/////VZX/////ZcBVlXd/AABm/lWVd38AAGb+VZUQAf//ZcBVlYeA/////1WVAAAAAMy+VZX/////ZcD/v4eA//+YAf+//////zJB/78QAf//ZcD/v4eA//////+/EAH//zJB/78AAAAAzL7/vxAB//8yQf+/EAH//2XA/78AAAAAmT//vwAAAACZP6nqh4D//5gBqeoQAf//MkGp6nd/AAAAAKnqAAAAAJk/ST3u/gAAmT9JPXd/AAAAAEk9d38AAGb+ST0AAAAAzL5JPe7+AADMvkk9SoAPAEqADwBKgA8ASoAPAMR/dQDEf3UAxH91AMR/dQBOfiQCTn4kAk5+JAJOfiQC6n4k/+p+JP/qfiT/6n4k//7//3////9//v//f////3////9//v//fzqAif86gIn/OoCJ/zqAif8egGr/HoBq/x6Aav8egGr/jiy4aY4suGmOLLhpjiy4aY4suGmOLLhp")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_1osul")
+shadow_mesh = SubResource("ArrayMesh_yn13b")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c2jm4"]
 resource_name = "Material.004"
@@ -2338,7 +2341,7 @@ albedo_texture = ExtResource("20_6f5l0")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_dgtug"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_kkf6q"]
 _surfaces = [{
 "aabb": AABB(-1.2195544, -8.295831, -1.2217447, 2.4434893, 9.295831, 2.4434893),
 "format": 34896613377,
@@ -2368,7 +2371,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("ABfryMPoVNUAF///OxdU1QAX///D6FTVABfryDsXVNUAF+vIOxf//4no//87F///ABf//zsX//+J6OvIOxf//4no68g7F1TViej//8PoVNWJ6P//OxdU1Yno68jD6FTViejryMPo/78AF///w+j/v4no///D6P+/ABfryMPo/7+J6P//Oxf//wAX///D6P//ABf//zsX//+J6P//w+j//wAX68jD6KfyAADixQAAp/IAF+vIOxen8gAA4sX//6fyABfryDsX/////+LFAAD//4no68g7F///AADixQAA//+J6OvIw+j//wAA4sX/////ABfryMPo/////+LF/////4no68g7F+Hy///ixf//4fKJ6OvIw+jh8v//4sUAAOHyAADixQAA//9mygAAAAD/////4sUAAP//KDUAAAAA//8oNQAAAAD//2bKAACW4///ZsoAAAAA//8oNQAAluP//wAA4sX///f9KDUAAAAA9/0AAOLFAAD3/Sg1AACW4/f9///ixQAA8v1mygAAluPy/f//4sX///L9ZsoAAAAA8v3//+LF/////yg1AACW4///AADixf////9mygAAluP//1RVqqpUVaqqVFWqqlRVqqr/v/8//7//P/+//z//P/+/qqpUVaqqVFWqqlRVqqpUVf9//3//f/9//3//f/9//3//f/+//3//v/9//7//f/+/cXI4uXFyOLlxcji5cXI4uf9/Bc//fwXP/38Fz/9/Bc//f/iw/3/4sP9/+LD/f/iwVDlXDVQ5Vw1UOVcNVDlXDf///3////9/////f////3//f/8//3//P/9//z//f/8/G0HIfRtByH0bQch9G0HIfTwCHcE8Ah3BPAIdwTwCHcH/f6F9/3+hff9/oX3/f6F9")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_dgtug")
+shadow_mesh = SubResource("ArrayMesh_kkf6q")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slnkd"]
 resource_name = "Material.005"
@@ -2378,7 +2381,7 @@ albedo_texture = ExtResource("20_6f5l0")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_q373u"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_43nl2"]
 _surfaces = [{
 "aabb": AABB(-1, -1, -1, 2, 2, 2),
 "format": 34896613377,
@@ -2408,7 +2411,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AAAAAP//VNUAAP//AABU1QAA/////1TVAAAAAAAAVNUAAAAAAAD///////8AAP//AAD//wAA/////wAAAAD/////AAAAAFTV////////VNX/////AABU1f//AAD//1TV//8AAP///78AAP//////v/////////+/AAAAAP///78AAAAAAAD/v///AAD///+///8AAAAA/78AAAAA////v/////8AAP//AAD///////8AAP//AAD/////////////VNVU1VTVVNVU1VTVVNVU1f+//7//v/+//7//v/+//7+qKqoqqiqqKqoqqiqqKqoq/////////////////////wAA/38AAP9/AAD/fwAA/3//f/+//3//v/9//7//f/+/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_q373u")
+shadow_mesh = SubResource("ArrayMesh_43nl2")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i6oi6"]
 resource_name = "Material.002"
@@ -2418,7 +2421,7 @@ albedo_texture = ExtResource("21_xftyi")
 roughness = 0.5
 metadata/_gltf_primary_texture_coord = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_hmy1o"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_8ake5"]
 _surfaces = [{
 "aabb": AABB(-1, -1, -3.373229, 2, 2, 4.9357142),
 "format": 34359742465,
@@ -2448,7 +2451,7 @@ _surfaces = [{
 "vertex_data": PackedByteArray("AACAvwAAgL8AAIA/AACAvwAAgD8AAIC/AACAvwAAgD8AAIA/AACAvwAAgL8AAIC/fzwOPwAAgL8AAIC/fzwOPz7VLj/84lfAfzwOPwAAgD8AAIC/fzwOPwAAgL/84lfAAACAPwAAgL8AAIC/AACAPwAAgD8AAIA/AACAPwAAgD8AAIC/AACAPwAAgL8AAIA/2/9vvwAAgL8AAIA/AACAvwAAgD8AAIA/2/9vvwAAgD8AAIA/AACAvwAAgL8AAIA/agFxPwAAgL8AAIC/AACAPwAAgL8AAIA/AACAPwAAgL8AAIC/agFxPwAAgL8AAIA/2/9vvwAAgD8AAIC/AACAvwAAgD8AAIA/AACAvwAAgD8AAIC/2/9vvwAAgD8AAIA/agFxPwAAgD8AAIC/fzwOPwAAgD8AAIA/fzwOPwAAgD8AAIC/agFxPwAAgD8AAIA/2/9vvwAAgL8AAIC/fzwOPwAAgL8AAIA/fzwOPwAAgL8AAIC/2/9vvwAAgL8AAIA/fzwOPwAAgL8AAIA/agFxPwAAgL/INLg/agFxPwAAgL8AAIA/fzwOPwAAgL/INLg/2/9vvwAAgL8AAIA/2/9vvwAAgL/INLg/AACAvwAAgL8AAIC/2/9vvwAAgL8AAIC/AACAvwAAgL8AAIA/2/9vvwAAgL8AAIC/fzwOPwAAgD8AAIC/2/9vvwAAgD8AAIC/fzwOPwAAgL8AAIC/agFxPwAAgL/84lfAAACAPz7VLj/84lfAagFxPz7VLj/84lfAAACAPwAAgL/84lfAAACAPwAAgD8AAIC/AACAPwAAgL/84lfAAACAPwAAgL8AAIC/AACAPz7VLj/84lfAagFxPwAAgD8AAIC/AACAPz7VLj/84lfAAACAPwAAgD8AAIC/agFxPz7VLj/84lfAagFxPwAAgL8AAIC/fzwOPwAAgL/84lfAfzwOPwAAgL8AAIC/agFxPwAAgL/84lfAAACAvwAAgL8AAIC/2/9vvwAAgD8AAIC/AACAvwAAgD8AAIC/2/9vvwAAgL8AAIC/fzwOPwAAgD8AAIC/2/9vvwAAgD8AAIA/2/9vvwAAgD8AAIC/fzwOPwAAgD8AAIA/agFxPwAAgL8AAIA/agFxPwAAgD/INLg/agFxPwAAgD8AAIA/agFxPwAAgL/INLg/AACAPwAAgL8AAIC/agFxPwAAgL/84lfAagFxPwAAgL8AAIC/AACAPwAAgL/84lfAfzwOPwAAgD8AAIC/agFxPz7VLj/84lfAagFxPwAAgD8AAIC/fzwOPz7VLj/84lfAfzwOPwAAgL/84lfAagFxPz7VLj/84lfAfzwOPz7VLj/84lfAagFxPwAAgL/84lfAAACAPwAAgL8AAIA/agFxPwAAgD8AAIA/AACAPwAAgD8AAIA/agFxPwAAgL8AAIA/AACAPwAAgD8AAIC/agFxPwAAgD8AAIA/agFxPwAAgD8AAIC/AACAPwAAgD8AAIA/fzwOPwAAgL8AAIC/agFxPwAAgL8AAIA/agFxPwAAgL8AAIC/fzwOPwAAgL8AAIA/agFxPwAAgD8AAIA/fzwOPwAAgD/INLg/fzwOPwAAgD8AAIA/agFxPwAAgD/INLg/2/9vvwAAgD8AAIA/2/9vvwAAgL/INLg/2/9vvwAAgL8AAIA/2/9vvwAAgD/INLg/fzwOPwAAgD8AAIA/2/9vvwAAgD/INLg/2/9vvwAAgD8AAIA/fzwOPwAAgD/INLg/nnLsPq03Zr/INLg/fzwOPwAAgL/INLg/nnLsPgAAgL/INLg/fzwOP603Zr/INLg/rhVfv603Zr/INLg/nnLsPnwZbD/INLg/rhVfvwAAgL/INLg/fzwOP3wZbD/INLg/2/9vv603Zr/INLg/2/9vvwAAgL/INLg/2/9vv3wZbD/INLg/rhVfv3wZbD/INLg/2/9vvwAAgD/INLg/rhVfvwAAgD/INLg/nnLsPgAAgD/INLg/fzwOPwAAgD/INLg/nnLsPq03Zr/INLg/nnLsPnwZbD8kD6s/nnLsPnwZbD/INLg/nnLsPq03Zr8kD6s/rhVfv3wZbD8kD6s/nnLsPq03Zr8kD6s/rhVfv603Zr8kD6s/nnLsPnwZbD8kD6s/rhVfv603Zr/INLg/nnLsPq03Zr8kD6s/nnLsPq03Zr/INLg/rhVfv603Zr8kD6s/nnLsPnwZbD/INLg/rhVfv3wZbD8kD6s/rhVfv3wZbD/INLg/nnLsPnwZbD8kD6s/rhVfv3wZbD/INLg/rhVfv603Zr8kD6s/rhVfv603Zr/INLg/rhVfv3wZbD8kD6s/fzwOPwAAgD/INLg/agFxPwAAgL/INLg/agFxPwAAgD/INLg/fzwOPwAAgL/INLg/fzwOPwAAgD+E/8c/agFxPwAAgL+E/8c/fzwOPwAAgL+E/8c/agFxPwAAgD+E/8c/fzwOPwAAgL/INLg/agFxPwAAgL+E/8c/agFxPwAAgL/INLg/fzwOPwAAgL+E/8c/agFxPwAAgL/INLg/agFxPwAAgD+E/8c/agFxPwAAgD/INLg/agFxPwAAgL+E/8c/fzwOPwAAgD/INLg/fzwOPwAAgL+E/8c/fzwOPwAAgL/INLg/fzwOPwAAgD+E/8c/agFxPwAAgD/INLg/fzwOPwAAgD+E/8c/fzwOPwAAgD/INLg/agFxPwAAgD+E/8c/AAD/f/9/AIAAAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//3///wAA/3//f///AAD/f/9///8AAP9//3///////3//fwCA////f/9/AID///9//38AgP///3//fwCA/3//fwAA/7//f/9/AAD/v/9//38AAP+//3//fwAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9///////+//3///////7//f///////v/9///////+//3///////7//f///////v/9///////+//3///////7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/v/////84AWK//////zgBYr//////OAFiv/////84AWK//////////7//////////v/////////+//////////7////9//38AgP///3//fwCA////f/9/AID///9//38AgBSP//////+/FI///////78Uj///////vxSP//////+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//////////v/////////+//////////7//////////v/9///////+//3///////7//f///////v/9///////+/////f/9//7////9//3//v////3//f/+/////f/9//7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//fwAAAAD/vxSP//////+/FI///////78Uj///////vxSP//////+//////////7//////////v/////////+//////////7//f/9/AAD/v/9//38AAP+//3//fwAA/7//f/9/AAD/v/9///////+//3///////7//f///////v/9///////+//38AAAAA/7//fwAAAAD/v/9/AAAAAP+//38AAAAA/7//f///////v/9///////+//3///////7//f///////vwAA/3//////AAD/f/////8AAP9//////wAA/3///////3///////7//f///////v/9///////+//3///////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f/9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+//3//f////7//f/9/////v/9//3////+//3//f////7//f///////v/9///////+//3///////7//f///////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/////f////7////9/////v////3////+/////f////7//////AAD/P/////8AAP8//////wAA/z//////AAD/P/9//38AAP+//3//fwAA/7//f/9/AAD/v/9//38AAP+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7////9/////v////3////+/////f////7////9/////vwAA/3////+/AAD/f////78AAP9/////vwAA/3////+//3///////7//f///////v/9///////+//3///////78=")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_hmy1o")
+shadow_mesh = SubResource("ArrayMesh_8ake5")
 
 [sub_resource type="QuadMesh" id="QuadMesh_w1tq5"]
 
@@ -2486,7 +2489,7 @@ shader_parameter/bottom_strenth = 0.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_f38ba"]
 size = Vector3(1.3374634, 1.9067383, 1)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_w1tq5"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_l2vvo"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -2502,16 +2505,7 @@ animations = [{
 "name": &"abstract",
 "speed": 5.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("60_f50j7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("61_ynljt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("62_7n3lu")
-}],
+"frames": [],
 "loop": 1,
 "name": &"default",
 "speed": 5.0
@@ -2590,491 +2584,293 @@ material = SubResource("StandardMaterial3D_eo1xk")
 
 [node name="lvl_3" type="Node3D" unique_id=7805308]
 
-[node name="Lvl3_entity2" parent="." unique_id=1280363385 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 185.06956, 126.76768, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity6" parent="." unique_id=489100421 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.7796, 125.49561, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity7" parent="." unique_id=16430612 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 185.06956, 125.49561, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity10" parent="." unique_id=1273356015 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 189.05974, 125.49561, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity14" parent="." unique_id=1522749439 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.65807, 129.30963, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity16" parent="." unique_id=759669160 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.7796, 128.03757, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity17" parent="." unique_id=1158326175 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 185.06956, 128.03757, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity19" parent="." unique_id=1540093992 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 187.65807, 128.03757, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity22" parent="." unique_id=1293402118 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 191.88669, 126.76768, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity26" parent="." unique_id=1427315083 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 190.59673, 125.49561, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity28" parent="." unique_id=1960081125 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.21811, 125.49561, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity29" parent="." unique_id=2065776966 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194.47519, 125.49561, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity31" parent="." unique_id=2040729665 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 190.59673, 129.30963, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity34" parent="." unique_id=1545591587 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194.47519, 129.30963, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity36" parent="." unique_id=435458691 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 190.59673, 128.03757, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity38" parent="." unique_id=1142501698 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 193.21811, 128.03757, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity39" parent="." unique_id=1648160653 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194.47519, 128.03757, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity43" parent="." unique_id=626375036 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 174.40775, 5.4420385, -6.34399)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
 [node name="Lvl3_entity45" parent="." unique_id=1041142875 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 206.19635, 20.072884, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 232.2756, 14.174749, 22.871006)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity46" parent="." unique_id=1445608655 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 171.78636, 6.0355673, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity47" parent="." unique_id=1484893593 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 189.95663, 19.11092, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity49" parent="." unique_id=1292512701 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 191.52084, 18.209236, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity55" parent="." unique_id=1335162462 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.0665, 5.583987, 26.864292)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity56" parent="." unique_id=817423291 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 171.78636, 11.163942, -11.959898)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity57" parent="." unique_id=1561098627 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 173.07632, 9.478137, 22.297047)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity59" parent="." unique_id=1807907162 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 216.33861, -5.6812506, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity60" parent="." unique_id=1675483693 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.1514, 23.098959, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.1514, 16.497381, 0)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity63" parent="." unique_id=170901374 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 181.22487, 7.3076315, -15.8591385)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity65" parent="." unique_id=558228907 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 183.88362, 7.3076315, -23.172897)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity67" parent="." unique_id=689530486 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 189.32559, 12.051739, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity69" parent="." unique_id=52372818 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.38286, 11.646887, 0)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity77" parent="." unique_id=647107838 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 205.82063, 8.577521, 47.020046)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity79" parent="." unique_id=899216348 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 214.88277, 12.415809, 0)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity84" parent="." unique_id=687119418 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 264.86823, 41.520157, 71.08017)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity91" parent="." unique_id=2042343684 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 280.62445, 48.485893, 66.46178)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity93" parent="." unique_id=2031856628 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 257.78098, 53.463806, 76.62355)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity97" parent="." unique_id=157555200 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 272.1029, 45.231518, 69.89218)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity102" parent="." unique_id=25225056 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 243.75713, 43.061012, 65.38995)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity105" parent="." unique_id=1890812079 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 227.32112, 43.061012, 83.26776)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity106" parent="." unique_id=1624368594 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 242.33179, 45.942207, 80.698326)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity109" parent="." unique_id=1678505715 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 246.13983, 47.40027, 69.51691)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity111" parent="." unique_id=1789583644 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 244.89478, 53.886543, 67.36042)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity114" parent="." unique_id=817633153 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 243.01794, 40.079502, 64.10966)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity117" parent="." unique_id=1991065740 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 277.14148, 44.330902, 29.173275)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity121" parent="." unique_id=1740207390 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 264.25092, 81.52372, 75.32993)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity123" parent="." unique_id=1455296836 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 247.81502, 68.410385, 83.059654)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity127" parent="." unique_id=1932283660 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 242.97511, 81.395515, 66.42193)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity130" parent="." unique_id=40548467 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 242.77835, 84.85388, 67.22727)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity134" parent="." unique_id=1661682990 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 261.98434, 76.96066, 72.63753)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity139" parent="." unique_id=1979043336 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 234.74312, 54.54615, 43.57447)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity143" parent="." unique_id=479407511 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 236.02396, 68.02509, 81.91343)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity146" parent="." unique_id=128488674 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 242.68877, 72.25185, 80.698326)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity149" parent="." unique_id=1438599587 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 246.14977, 74.40793, 69.51691)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity153" parent="." unique_id=1648021609 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 236.8287, 70.770355, 52.468433)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity157" parent="." unique_id=1729313487 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 277.16898, 77.29427, 29.173275)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity161" parent="." unique_id=1704290750 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 265.63052, 98.63525, 75.32993)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity169" parent="." unique_id=699749467 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 245.16669, 106.44341, 65.06728)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity171" parent="." unique_id=52588943 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 280.04907, 92.79843, 66.46178)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity177" parent="." unique_id=1368711528 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 271.0148, 91.537506, 69.89218)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity179" parent="." unique_id=1296450710 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 227.71729, 85.94331, 43.57447)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity182" parent="." unique_id=1782855920 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 242.90402, 95.77759, 65.38995)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity183" parent="." unique_id=1295197282 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 234.35464, 97.74449, 81.91343)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity184" parent="." unique_id=280591660 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 100.5376, 87.65431)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity186" parent="." unique_id=1237959366 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 242.16095, 98.90501, 80.698326)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity193" parent="." unique_id=1089970983 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 236.20363, 99.92746, 52.468433)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity196" parent="." unique_id=1307748157 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 218.62566, 102.66624, 21.734035)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity200" parent="." unique_id=504378227 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 273.1822, 90.11472, 56.00932)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity202" parent="." unique_id=292927337 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48825216, 0.2211384, 0.8442201, 0.11116342, 0.97524226, -0.19116785, -0.8655937, 0.0005083019, -0.50074667, 255.26901, 140.63037, 79.087585)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity207" parent="." unique_id=1023487129 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 246.13106, 153.6439, 66.42193)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity208" parent="." unique_id=1991016861 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 247.958, 153.55478, 69.54033)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity212" parent="." unique_id=925667736 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 259.74582, 144.56813, 77.07844)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity213" parent="." unique_id=2046107749 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 258.90323, 149.2684, 76.62355)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity218" parent="." unique_id=1078096294 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 255.4756, 145.6555, 78.08445)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity223" parent="." unique_id=975550466 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 234.35464, 144.24161, 81.91343)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity224" parent="." unique_id=1663902826 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 147.03471, 87.65431)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity225" parent="." unique_id=507379603 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 226.88646, 145.95978, 83.26776)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity226" parent="." unique_id=252252387 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 242.16095, 145.40213, 80.698326)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
-
-[node name="Lvl3_entity228" parent="." unique_id=1193611771 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 248.3344, 147.56439, 72.502)
-player = NodePath("../Player")
-main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="Lvl3_entity233" parent="." unique_id=1198993850 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 236.20363, 146.42458, 52.468433)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
-[node name="Lvl3_entity235" parent="." unique_id=2017820941 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 225.61098, 145.59662, 34.910053)
+[node name="Lvl3_entity46" parent="." unique_id=667635756 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 206.19635, 12.8912945, 11.241062)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
-[node name="Lvl3_entity237" parent="." unique_id=2081077934 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
-transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 275.72318, 136.02725, 29.173275)
+[node name="Lvl3_entity56" parent="." unique_id=446495196 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.0665, 5.583987, 26.864292)
 player = NodePath("../Player")
 main_timer = NodePath("../UI/MainTimer")
-move_speed = 12.0
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity61" parent="." unique_id=1420140780 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.1514, 11.59075, 4.7006416)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity70" parent="." unique_id=1690938753 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.38286, 11.646887, 0)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity92" parent="." unique_id=1187494667 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 280.62445, 48.485893, 66.46178)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity106" parent="." unique_id=1899868906 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 227.32112, 43.061012, 83.26776)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity115" parent="." unique_id=2078253617 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 243.01794, 40.079502, 64.10966)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity128" parent="." unique_id=163631285 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 242.97511, 81.395515, 66.42193)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity144" parent="." unique_id=110699353 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 236.02396, 68.02509, 81.91343)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity158" parent="." unique_id=30475753 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 277.16898, 77.29427, 29.173275)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity178" parent="." unique_id=533501346 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 271.0148, 91.537506, 69.89218)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity185" parent="." unique_id=2069469387 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 100.5376, 87.65431)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity201" parent="." unique_id=979716726 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 273.1822, 90.11472, 56.00932)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity213" parent="." unique_id=325675785 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 259.74582, 144.56813, 77.07844)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity225" parent="." unique_id=574764213 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 147.03471, 87.65431)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
+
+[node name="Lvl3_entity234" parent="." unique_id=1251613927 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
+transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 236.20363, 146.42458, 52.468433)
+player = NodePath("../Player")
+main_timer = NodePath("../UI/MainTimer")
+detection_radius = 30.0
+move_speed = 15.5
+catch_distance = 1.0
+time_penalty = 10.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=86698238]
 environment = SubResource("Environment_fk0w4")
@@ -12994,16 +12790,6 @@ collide_with_areas = true
 [node name="CameraSFXPlayer" type="AudioStreamPlayer" parent="Player" unique_id=684313200]
 stream = ExtResource("15_aegdx")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1012280862]
-
-[node name="HitOverlay" type="ColorRect" parent="CanvasLayer" unique_id=1997597070]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0)
-
 [node name="Screen_Fade" type="CanvasLayer" parent="." unique_id=554123897]
 script = ExtResource("49_7kqa1")
 
@@ -13021,8 +12807,18 @@ mouse_filter = 2
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=861890313]
 
-[node name="MainTimer" parent="UI" unique_id=203433636 instance=ExtResource("50_m3eo5")]
+[node name="MainTimer" type="Node" parent="UI" unique_id=203433636]
+script = ExtResource("50_wq80p")
 timeout_sound = ExtResource("51_4ol75")
+
+[node name="TimeDisplay" type="RichTextLabel" parent="UI/MainTimer" unique_id=1065760690]
+offset_right = 1154.0
+offset_bottom = 651.0
+mouse_filter = 2
+bbcode_enabled = true
+
+[node name="Timer" type="Timer" parent="UI/MainTimer" unique_id=228405251]
+wait_time = 30.0
 
 [node name="ProximityLabel" type="RichTextLabel" parent="UI" unique_id=1057028246]
 anchors_preset = 7
@@ -13084,10 +12880,10 @@ mouse_filter = 2
 [node name="Area3D" type="Area3D" parent="." unique_id=840038558]
 transform = Transform3D(0.51763827, 0, -1.9318519, 0, 2, 0, 1.9318519, 0, 0.51763827, 292.2229, 122.99872, 64.48599)
 script = ExtResource("56_4ol75")
+entry_sound = ExtResource("57_wq80p")
 spawn_positions = Array[Vector3]([])
 next_level_scene = ExtResource("57_u5fi6")
 show_score_menu = false
-post_win_delay = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=77723821]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.020843506, 1.189149, 0)
@@ -13098,7 +12894,7 @@ shape = SubResource("BoxShape3D_f38ba")
 [node name="Abstract4" type="Area3D" parent="." unique_id=937110282]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 259.75034, 219.19244, -15.393921)
 script = ExtResource("59_wfxae")
-coin_sprite_frames = SubResource("SpriteFrames_w1tq5")
+coin_sprite_frames = SubResource("SpriteFrames_l2vvo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract4" unique_id=1432076193]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -117.291046, 0)
@@ -13139,7 +12935,7 @@ omni_attenuation = 0.1
 [node name="Abstract8" type="Area3D" parent="." unique_id=1326342470]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 168.37906, 179.69647, 68.14732)
 script = ExtResource("59_wfxae")
-coin_sprite_frames = SubResource("SpriteFrames_w1tq5")
+coin_sprite_frames = SubResource("SpriteFrames_l2vvo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract8" unique_id=821030760]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -108.92509, 0)
@@ -13180,7 +12976,7 @@ omni_attenuation = 0.1
 [node name="Abstract9" type="Area3D" parent="." unique_id=1703424744]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.5951, 237.88776, -4.8265457)
 script = ExtResource("59_wfxae")
-coin_sprite_frames = SubResource("SpriteFrames_w1tq5")
+coin_sprite_frames = SubResource("SpriteFrames_l2vvo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract9" unique_id=287322536]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -102.826904, 0)
@@ -13221,7 +13017,7 @@ omni_attenuation = 0.1
 [node name="Abstract10" type="Area3D" parent="." unique_id=1732835003]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 289.8105, 138.38379, 36.800247)
 script = ExtResource("59_wfxae")
-coin_sprite_frames = SubResource("SpriteFrames_w1tq5")
+coin_sprite_frames = SubResource("SpriteFrames_l2vvo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract10" unique_id=558672266]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -98.02942, 0)
@@ -13263,7 +13059,7 @@ omni_attenuation = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 212.12161, 107.47598, 46.689896)
 script = ExtResource("59_wfxae")
 target_shape = 1
-coin_sprite_frames = SubResource("SpriteFrames_w1tq5")
+coin_sprite_frames = SubResource("SpriteFrames_l2vvo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract2" unique_id=1050945172]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -101.855865, 0)
@@ -13305,7 +13101,7 @@ omni_attenuation = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 223.7859, 238.76617, 30.92276)
 script = ExtResource("59_wfxae")
 target_shape = 1
-coin_sprite_frames = SubResource("SpriteFrames_w1tq5")
+coin_sprite_frames = SubResource("SpriteFrames_l2vvo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract3" unique_id=2071635352]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -114.56351, 0)

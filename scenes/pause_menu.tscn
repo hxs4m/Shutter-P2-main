@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dcfg183n3t60v" path="res://scripts/pause_menu.gd" id="1_n87rw"]
 [ext_resource type="Script" uid="uid://dxhs1qjlil2ls" path="res://scenes/pausebutton.gd" id="2_myx47"]
-[ext_resource type="FontFile" uid="uid://bghs7isve4i5x" path="res://textures/CrimsonHorrorThree-9MdM5.ttf" id="3_kukqi"]
+[ext_resource type="FontFile" uid="uid://xusiglykfc7h" path="res://addons/home-video/HomeVideo-Regular.ttf" id="3_5d2l8"]
 [ext_resource type="PackedScene" uid="uid://u7pvin73qtj4" path="res://scenes/settings_menu.tscn" id="4_5d2l8"]
 
 [sub_resource type="Gradient" id="Gradient_myx47"]
@@ -15,6 +15,9 @@ gradient = SubResource("Gradient_myx47")
 [node name="PauseMenu" type="CanvasLayer" unique_id=353940448]
 process_mode = 3
 script = ExtResource("1_n87rw")
+disabled_scenes = Array[String]([])
+use_whitelist_mode = true
+allowed_scenes = Array[String](["res://scenes/world.tscn", "res://scenes/lvl_2.tscn", "res://scenes/lvl_3.tscn", "res://scenes/lvl_4_fn.tscn", "res://scenes/lvl_5.tscn"])
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2020871224]
 anchors_preset = 15
@@ -55,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.83137256, 0.8156863, 0.7058824, 0.5882353)
-theme_override_fonts/normal_font = ExtResource("3_kukqi")
+theme_override_fonts/normal_font = ExtResource("3_5d2l8")
 bbcode_enabled = true
 text = "[font_size=30][wave amp=10.0 freq=5.0 ]Continue"
 fit_content = true
@@ -75,7 +78,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.83137256, 0.8156863, 0.7058824, 0.5882353)
-theme_override_fonts/normal_font = ExtResource("3_kukqi")
+theme_override_fonts/normal_font = ExtResource("3_5d2l8")
 bbcode_enabled = true
 text = "[font_size=30][wave amp=10.0 freq=5.0 ]Settings"
 fit_content = true
@@ -95,7 +98,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.83137256, 0.8156863, 0.7058824, 0.5882353)
-theme_override_fonts/normal_font = ExtResource("3_kukqi")
+theme_override_fonts/normal_font = ExtResource("3_5d2l8")
 bbcode_enabled = true
 text = "[font_size=30][wave amp=10.0 freq=5.0 ]Back To Main Menu"
 fit_content = true
@@ -115,7 +118,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.83137256, 0.8156863, 0.7058824, 0.5882353)
-theme_override_fonts/normal_font = ExtResource("3_kukqi")
+theme_override_fonts/normal_font = ExtResource("3_5d2l8")
 bbcode_enabled = true
 text = "[font_size=30][wave amp=10.0 freq=5.0 ]Quit Game"
 fit_content = true

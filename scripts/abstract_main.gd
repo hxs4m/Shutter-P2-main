@@ -44,6 +44,7 @@ var has_been_photographed: bool = false
 @onready var light: OmniLight3D = $OmniLight3D
 
 func _ready() -> void:
+	add_to_group("abstracts")
 	start_y = position.y
 	_make_systems_unique()
 	_update_everything()
@@ -107,11 +108,11 @@ func _update_everything() -> void:
 		light.light_energy = custom_light_energy
 
 func _process(delta: float) -> void:
+	elapsed_time += delta
 	rotate_y(spin_speed * delta)
 	position.y = start_y + (sin(elapsed_time * float_speed) * float_amplitude)
 
 	if mat and total_frames > 0:
-		elapsed_time += delta
 		var current_frame = int(elapsed_time / frame_duration) % total_frames
 		if current_frame != last_frame_index:
 			last_frame_index = current_frame

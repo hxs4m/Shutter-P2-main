@@ -4,7 +4,17 @@ extends Area3D
 @export var win_label: RichTextLabel 
 @export var proximity_label: RichTextLabel
 @export var glitch_audio_player: AudioStreamPlayer
+@export var entry_sound: AudioStream  # Single sound file
 @export var camera: Camera3D
+
+@export_group("Fade Settings")
+@export var fade_duration: float = 1.2  # Total duration of the fade transition
+@export var fade_steps: int = 6         # Number of discrete visual steps (PS1 posterized style)
+@export var fade_color: Color = Color.BLACK
+
+@export_group("Pitch Variation Settings")
+@export var min_pitch: float = 0.8  # Lower pitch threshold
+@export var max_pitch: float = 1.3  # Higher pitch threshold
 
 @export_group("Glitch Settings")
 @export var number_of_twentytwos: int = 18
@@ -24,7 +34,7 @@ extends Area3D
 @export var next_level_scene: PackedScene  # Drag & drop scene file directly here
 @export_file("*.tscn") var next_level_path: String  # Or pick scene file path here
 @export var show_score_menu: bool = true  # Toggle score menu on/off for this door
-@export var post_win_delay: float = 2.5
+@export var scene_transition_delay: float = 0.8  # Delay before loading menu/scene (0.8s default)
 
 var _spawned_labels: Array[Control] = []
 var _player: Node3D = null
@@ -36,8 +46,16 @@ var _intro_timer: float = 0.0
 var _intro_fade_duration: float = 0.8
 var _intro_hold_duration: float = 1.5
 
+# --- Dynamic Fade Canvas ---
+var _fade_layer: CanvasLayer
+var _fade_rect: ColorRect
+
 
 func _ready() -> void:
+	# 1. Setup full-screen fade overlay and run retro PS1 stepped fade-in
+	_setup_fade_overlay()
+	_fade_in_scene_stepped()
+
 	if spawn_positions.size() > 0:
 		global_position = spawn_positions.pick_random()
 	
@@ -66,6 +84,44 @@ func _ready() -> void:
 
 	if proximity_label:
 		proximity_label.visible = false
+
+
+# --- RETRO STEPPED FADE OVERLAY & METHODS ---
+func _setup_fade_overlay() -> void:
+	_fade_layer = CanvasLayer.new()
+	_fade_layer.layer = 128  # Ensure overlay renders above UI
+	_fade_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	_fade_rect = ColorRect.new()
+	_fade_rect.color = fade_color
+	_fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fade_rect.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	_fade_layer.add_child(_fade_rect)
+	add_child(_fade_layer)
+
+
+func _fade_in_scene_stepped() -> void:
+	_fade_layer.visible = true
+	var steps := maxi(1, fade_steps)
+	var step_delay := fade_duration / float(steps)
+
+	for i in range(steps, -1, -1):
+		_fade_rect.modulate.a = float(i) / float(steps)
+		await get_tree().create_timer(step_delay, true, false, true).timeout
+
+	_fade_layer.visible = false
+
+
+func _fade_out_scene_stepped() -> void:
+	_fade_layer.visible = true
+	var steps := maxi(1, fade_steps)
+	var step_delay := fade_duration / float(steps)
+
+	for i in range(steps + 1):
+		_fade_rect.modulate.a = float(i) / float(steps)
+		await get_tree().create_timer(step_delay, true, false, true).timeout
 
 
 func _process(delta: float) -> void:
@@ -133,14 +189,18 @@ func _on_body_entered(body: Node3D) -> void:
 		_has_triggered = true
 		print("🏆 Player reached the exit!")
 
-		# --- GRAB TIME AND CALCULATE SCORE ---
+		# Play touch sound immediately
+		_play_pitched_entry_sound()
+
+		# Grab time, persist timer value for next level, and calculate score
 		var timers = get_tree().get_nodes_in_group("MainTimer")
 		var remaining_time = 0.0
 		if timers.size() > 0:
 			remaining_time = timers[0].timer.time_left
+			if timers[0].has_method("save_time_for_next_level"):
+				timers[0].save_time_for_next_level()
 		
 		ScoreManager.calculate_final_score(remaining_time)
-
 		get_tree().call_group("MainTimer", "hide_timer")
 
 		body_entered.disconnect(_on_body_entered)
@@ -151,11 +211,25 @@ func _on_body_entered(body: Node3D) -> void:
 		_trigger_glitch_sequence()
 
 
-func _trigger_glitch_sequence() -> void:
-	if glitch_audio_player:
-		glitch_audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
+func _play_pitched_entry_sound() -> void:
+	# Fallback: create AudioStreamPlayer if not assigned in Inspector
+	if glitch_audio_player == null:
+		glitch_audio_player = AudioStreamPlayer.new()
+		add_child(glitch_audio_player)
+
+	glitch_audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	if entry_sound:
+		glitch_audio_player.stream = entry_sound
+
+	# Randomize pitch scale between min_pitch and max_pitch
+	glitch_audio_player.pitch_scale = randf_range(min_pitch, max_pitch)
+	
+	if glitch_audio_player.stream:
 		glitch_audio_player.play()
 
+
+func _trigger_glitch_sequence() -> void:
 	get_tree().paused = true
 
 	if win_label:
@@ -165,8 +239,9 @@ func _trigger_glitch_sequence() -> void:
 
 	_spawn_haphazard_twentytwos()
 
-	# Pause momentarily on win text
-	await get_tree().create_timer(post_win_delay, true, false, true).timeout
+	# Configurable delay while paused
+	if scene_transition_delay > 0.0:
+		await get_tree().create_timer(scene_transition_delay, true, false, true).timeout
 	
 	# --- OPTIONAL SCORE MENU ---
 	if show_score_menu:
@@ -178,7 +253,9 @@ func _trigger_glitch_sequence() -> void:
 			# Wait until player presses "Proceed"
 			await score_menu.next_level_button.pressed 
 
-	# Carry out scene swap
+	# Perform stepped PS1 fade out before loading next scene
+	await _fade_out_scene_stepped()
+
 	_cleanup_and_swap_scenes()
 
 
@@ -220,10 +297,10 @@ func _cleanup_and_swap_scenes() -> void:
 		win_label.visible = false
 		win_label.text = ""
 
-	# 2. Unpause engine before loading the new scene
+	# 2. Unpause engine
 	get_tree().paused = false
 
-	# 3. Load the new scene directly (destroys current scene & player)
+	# 3. Load the new scene directly
 	if next_level_scene:
 		var err = get_tree().change_scene_to_packed(next_level_scene)
 		if err != OK:

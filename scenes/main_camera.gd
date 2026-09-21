@@ -293,6 +293,19 @@ func _process_photo_hit(target: Object) -> float:
 			return sanctum_target.apply_flash(from_pos)
 		return -1.0
 
+	# --- ABSTRACT CHECK ---
+	# Abstracts are collectibles, so any camera mode captures them.
+	# Short-circuits before the mode match, same as sanctums.
+	var abstract_target: Object = target
+	if not (abstract_target is Node and abstract_target.is_in_group("abstracts")):
+		if target.get("owner") and target.owner is Node and target.owner.is_in_group("abstracts"):
+			abstract_target = target.owner
+
+	if abstract_target is Node and abstract_target.is_in_group("abstracts"):
+		if abstract_target.has_method("disappear_from_photo"):
+			return abstract_target.disappear_from_photo()
+		return -1.0
+
 	match current_mode:
 		CameraMode.STUN:
 			return _apply_stun(target)

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://b7h32tja0vp5o"]
+
+[ext_resource type="VideoStream" uid="uid://cduw7qg5awjjk" path="res://textures/Timeline 1.ogv" id="1_vap3a"]
+[ext_resource type="Shader" uid="uid://d3gc457gpcdt4" path="res://addons/godot_retro/shaders/standard/crt_complex.gdshader" id="2_36kwq"]
+[ext_resource type="Script" uid="uid://80ia2vn7jk0h" path="res://Models/video_stream_player.gd" id="2_jjw4x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjw4x"]
+shader = ExtResource("2_36kwq")
+shader_parameter/blur_amount = 1.50000007125
+shader_parameter/signal_quality = 0.3
+shader_parameter/bottom_strenth = 0.0
+
+[node name="Node3D" type="Node3D" unique_id=299896088]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=942989796]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("1_vap3a")
+autoplay = true
+expand = true
+script = ExtResource("2_jjw4x")
+next_scene_path = "uid://dd54gmfqytqbg"
+
+[node name="crtshader" type="CanvasLayer" parent="." unique_id=13077006]
+
+[node name="ColorRect" type="ColorRect" parent="crtshader" unique_id=379735770]
+material = SubResource("ShaderMaterial_jjw4x")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

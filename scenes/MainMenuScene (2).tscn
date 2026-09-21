@@ -5,7 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://b4vla3y7chgdw" path="res://sfx/buttonclick.wav" id="2_mlkpy"]
 [ext_resource type="AudioStream" uid="uid://c6loh52hx3auc" path="res://sfx/friend_join.wav" id="3_17sr7"]
 [ext_resource type="Shader" uid="uid://d3gc457gpcdt4" path="res://addons/godot_retro/shaders/standard/crt_complex.gdshader" id="3_47rn7"]
-[ext_resource type="AudioStream" uid="uid://u56itp0ylbgp" path="res://sfx/ambience5.wav" id="4_47rn7"]
+[ext_resource type="FontFile" uid="uid://g88wb340lwpj" path="res://textures/HomeVideo-Regular.ttf" id="4_gprvj"]
+[ext_resource type="Texture2D" uid="uid://d0r1i1rohv7pb" path="res://textures/icons8-headphone-48.png" id="4_k4fpw"]
+[ext_resource type="AudioStream" uid="uid://dovese4pd8uyb" path="res://sfx/mainmenumsc.wav" id="7_gfxes"]
 [ext_resource type="PackedScene" uid="uid://u7pvin73qtj4" path="res://scenes/settings_menu.tscn" id="7_pi2b6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mlkpy"]
@@ -15,11 +17,11 @@ shader_parameter/DITHERING_STRENTH = 0.07000000029802
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_17sr7"]
 shader = ExtResource("3_47rn7")
-shader_parameter/blur_amount = 2.000000095
+shader_parameter/blur_amount = 1.50000007125
 shader_parameter/signal_quality = 0.3
 shader_parameter/bottom_strenth = 0.0
 
-[node name="MainMenuScene" type="Control" unique_id=1556253641]
+[node name="MainMenuScene" type="Control" unique_id=1556253641 node_paths=PackedStringArray("menu_music")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,12 +29,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o6rx4")
-main_level_scene = "uid://bic87uyeufp3x"
+main_level_scene = "uid://cygr3b8k4uvhq"
+menu_music = NodePath("SubViewportContainer/SubViewport/AudioStreamPlayer")
 hover_sound = ExtResource("2_mlkpy")
 click_sound = ExtResource("3_17sr7")
+custom_font = ExtResource("4_gprvj")
+headphone_texture = ExtResource("4_k4fpw")
+headphone_icon_size = Vector2(200, 200)
+disclaimer_2_text = "WARNING:
+This game may contain disturbing 
+imagery and loud noises for some individuals."
+credits_text = "A Team Appol creation
+Mazen Omar & Hossam Mohamed
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=76671012]
+Main menu & level 5 theme by @vagaleon"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1833937701]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1039339611]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=76671012]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -40,14 +66,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 1, 1)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=535556747]
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=535556747]
 
-[node name="UI_Layer" type="CanvasLayer" parent="CanvasLayer" unique_id=879151818]
+[node name="UI_Layer" type="CanvasLayer" parent="SubViewportContainer/SubViewport/CanvasLayer" unique_id=879151818]
 
-[node name="SettingsMenu" parent="CanvasLayer/UI_Layer" unique_id=1989262986 instance=ExtResource("7_pi2b6")]
+[node name="SettingsMenu" parent="SubViewportContainer/SubViewport/CanvasLayer/UI_Layer" unique_id=1989262986 instance=ExtResource("7_pi2b6")]
 unique_name_in_owner = true
 
-[node name="DisclaimerLayer" type="Control" parent="CanvasLayer/UI_Layer" unique_id=109377223]
+[node name="DisclaimerLayer" type="Control" parent="SubViewportContainer/SubViewport/CanvasLayer/UI_Layer" unique_id=109377223]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -56,7 +82,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DisclaimerBackground" type="ColorRect" parent="CanvasLayer/UI_Layer/DisclaimerLayer" unique_id=1594421829]
+[node name="DisclaimerBackground" type="ColorRect" parent="SubViewportContainer/SubViewport/CanvasLayer/UI_Layer/DisclaimerLayer" unique_id=1594421829]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -66,7 +92,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="DisclaimerLabel" type="Label" parent="CanvasLayer/UI_Layer/DisclaimerLayer" unique_id=1417389530]
+[node name="DisclaimerLabel" type="Label" parent="SubViewportContainer/SubViewport/CanvasLayer/UI_Layer/DisclaimerLayer" unique_id=1417389530]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -78,7 +104,15 @@ theme_override_font_sizes/font_size = 42
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuLayer" type="Control" parent="CanvasLayer" unique_id=1544852680]
+[node name="CreditsMenu" type="Control" parent="SubViewportContainer/SubViewport/CanvasLayer/UI_Layer" unique_id=453379310]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MenuLayer" type="Control" parent="SubViewportContainer/SubViewport/CanvasLayer" unique_id=1544852680]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -87,7 +121,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuLayer" unique_id=2095232888]
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/CanvasLayer/MenuLayer" unique_id=2095232888]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -101,23 +135,31 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=63222886]
+[node name="PlayButton" type="Button" parent="SubViewportContainer/SubViewport/CanvasLayer/MenuLayer/VBoxContainer" unique_id=63222886]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=1211894244]
+[node name="SettingsButton" type="Button" parent="SubViewportContainer/SubViewport/CanvasLayer/MenuLayer/VBoxContainer" unique_id=1211894244]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ExitButton" type="Button" parent="CanvasLayer/MenuLayer/VBoxContainer" unique_id=144681088]
+[node name="ControlsButton" type="Button" parent="SubViewportContainer/SubViewport/CanvasLayer/MenuLayer/VBoxContainer" unique_id=862749095]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CreditsButton" type="Button" parent="SubViewportContainer/SubViewport/CanvasLayer/MenuLayer/VBoxContainer" unique_id=1782671698]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="SubViewportContainer/SubViewport/CanvasLayer/MenuLayer/VBoxContainer" unique_id=144681088]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1057679575]
+[node name="dither" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=1057679575]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=1874388004]
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/dither" unique_id=1874388004]
 material = SubResource("ShaderMaterial_mlkpy")
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,9 +168,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=905642948]
+[node name="crt" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=905642948]
+layer = 100
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer3" unique_id=1286063264]
+[node name="ColorRect2" type="ColorRect" parent="SubViewportContainer/SubViewport/crt" unique_id=1286063264]
 material = SubResource("ShaderMaterial_17sr7")
 anchors_preset = 15
 anchor_right = 1.0
@@ -137,7 +180,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=775179656]
-stream = ExtResource("4_47rn7")
-volume_db = -6.537
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="SubViewportContainer/SubViewport" unique_id=775179656]
+stream = ExtResource("7_gfxes")
+volume_db = -10.0
 autoplay = true

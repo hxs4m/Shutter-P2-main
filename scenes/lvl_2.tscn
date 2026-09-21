@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://dslhs1u0jn5p4" path="res://Models/Lvl0/Door/low-poly_door.glb" id="4_0atve"]
 [ext_resource type="AudioStream" uid="uid://v5843ont5cpt" path="res://sfx/stalker_footstep_left1.wav" id="4_hmy1o"]
 [ext_resource type="AudioStream" uid="uid://461fr4gd6j8e" path="res://sfx/stalker_footstep_left2.wav" id="5_l67fq"]
-[ext_resource type="PackedScene" uid="uid://dp82rxvrjnjec" path="res://scenes/Bulb_Particles.tscn" id="6_e8ep2"]
 [ext_resource type="Texture2D" uid="uid://pf6n0w1a64br" path="res://Models/roamer_Gemini_Generated_Image_ymjnfhymjnfhymjn.jpg" id="7_7o323"]
 [ext_resource type="AudioStream" uid="uid://qvqhpiu7h3t7" path="res://sfx/pain2.wav" id="7_wuu8a"]
 [ext_resource type="Texture2D" uid="uid://m8uucu5a28ws" path="res://Models/roamer_a3b83252-6a82-4193-8944-5b12b1312da6.jpg" id="8_lmdrw"]
@@ -29,7 +28,7 @@
 [ext_resource type="AudioStream" uid="uid://u6s4briy5q72" path="res://sfx/friend_online.wav" id="23_ncbj2"]
 [ext_resource type="Texture2D" uid="uid://dal01x2ei6b0a" path="res://Models/Camera/cam1_sheet_with_backpanel.png" id="24_elc3b"]
 [ext_resource type="Script" uid="uid://dobk0s05hij4r" path="res://scenes/screen_fade.gd" id="26_wesv1"]
-[ext_resource type="PackedScene" uid="uid://c326uekpvfkdv" path="res://scenes/main_timer.tscn" id="27_q373u"]
+[ext_resource type="Script" uid="uid://cwjx0u0lo0nw5" path="res://scripts/main_timer.gd" id="28_3oqhv"]
 [ext_resource type="AudioStream" uid="uid://dygls8agrvxhw" path="res://sfx/soundreality-glitch-effect-3-530928.mp3" id="28_wx4jj"]
 [ext_resource type="Texture2D" uid="uid://c7uucwelkrbss" path="res://textures/crosshair1.png" id="29_hmy1o"]
 [ext_resource type="PackedScene" uid="uid://v0spw46ot6w7" path="res://scenes/lvl_2_fn.tscn" id="30_4q5qe"]
@@ -43,9 +42,10 @@
 [ext_resource type="Texture2D" uid="uid://balrrjm4i436p" path="res://Abstract Pics/Screenshot 2026-09-13 205623.png" id="40_l2vvo"]
 [ext_resource type="Shader" uid="uid://dn6n3sbj07vkr" path="res://Abstract Pics/abstract.gdshader" id="41_pjcxh"]
 [ext_resource type="Script" uid="uid://cdf4sslcwylnx" path="res://scripts/door.gd" id="43_l2vvo"]
-[ext_resource type="PackedScene" uid="uid://bqarwakha3u1k" path="res://scenes/lvl_3.tscn" id="43_pjcxh"]
 
 [sub_resource type="Environment" id="Environment_lk6hv"]
+ambient_light_source = 2
+ambient_light_color = Color(0.26666668, 0.26666668, 0.26666668, 1)
 volumetric_fog_enabled = true
 volumetric_fog_emission = Color(0.17211533, 0.1721153, 0.1721153, 1)
 
@@ -1470,7 +1470,7 @@ shader_parameter/blur_amount = 1.50000007125
 shader_parameter/signal_quality = 0.3
 shader_parameter/bottom_strenth = 0.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_6yj4k"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_rga7q"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -1486,16 +1486,7 @@ animations = [{
 "name": &"abstract",
 "speed": 5.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("38_ncbj2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39_2q1fo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40_l2vvo")
-}],
+"frames": [],
 "loop": 1,
 "name": &"default",
 "speed": 5.0
@@ -1514,7 +1505,7 @@ shader_parameter/line_threshold = 0.5
 _data = [Vector2(0.005376339, 0), 0.0, 0.0, 0, 0, Vector2(0.20967743, 0.9910715), 0.0, 0.0, 0, 0, Vector2(0.6989248, 0.9642858), 0.0, 0.0, 0, 0, Vector2(0.9892473, 0.044642925), -1.8932148, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_8u370"]
+[sub_resource type="CurveTexture" id="CurveTexture_x07su"]
 curve = SubResource("Curve_71r4h")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x34yv"]
@@ -1531,18 +1522,18 @@ damping_max = 4.721
 use_scale_3d = true
 scale_3d_min = Vector3(0.1, 0.1, 0.1)
 scale_3d_max = Vector3(0.4, 0.4, 0.4)
-scale_curve = SubResource("CurveTexture_8u370")
+scale_curve = SubResource("CurveTexture_x07su")
 turbulence_noise_scale = 6.305
 
-[sub_resource type="Gradient" id="Gradient_6oujy"]
+[sub_resource type="Gradient" id="Gradient_ccw1t"]
 colors = PackedColorArray(0.36862746, 0.36862746, 0.36862746, 1, 0.011764706, 0.011764706, 0.011764706, 0.2509804)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_r8a80"]
-gradient = SubResource("Gradient_6oujy")
+gradient = SubResource("Gradient_ccw1t")
 fill = 2
 fill_from = Vector2(0.5105042, 0.52310926)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eo1xk"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aw8et"]
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
@@ -1550,7 +1541,7 @@ shading_mode = 0
 albedo_texture = SubResource("GradientTexture2D_r8a80")
 
 [sub_resource type="QuadMesh" id="QuadMesh_2r5b0"]
-material = SubResource("StandardMaterial3D_eo1xk")
+material = SubResource("StandardMaterial3D_aw8et")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t6w7y"]
 emission_shape = 1
@@ -1566,11 +1557,11 @@ damping_max = 4.721
 use_scale_3d = true
 scale_3d_min = Vector3(0.1, 0.1, 0.1)
 scale_3d_max = Vector3(0.2, 0.2, 0.2)
-scale_curve = SubResource("CurveTexture_8u370")
+scale_curve = SubResource("CurveTexture_x07su")
 turbulence_noise_scale = 6.305
 
 [sub_resource type="QuadMesh" id="QuadMesh_boo2o"]
-material = SubResource("StandardMaterial3D_eo1xk")
+material = SubResource("StandardMaterial3D_aw8et")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iserb"]
 size = Vector3(1.3374634, 1.9067383, 1)
@@ -1580,15 +1571,10 @@ size = Vector3(1.3374634, 1.9067383, 1)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=496876388]
 environment = SubResource("Environment_lk6hv")
 
-[node name="GPUParticles3D" parent="." unique_id=1757198236 instance=ExtResource("6_e8ep2")]
-transform = Transform3D(464.8985, 0, 0, 0, 0.75547737, 0, 0, 0, 242.34018, 0.2750969, 2.3836346, -0.0074157715)
-visible = false
-amount = 10000
-
 [node name="roamer" type="CharacterBody3D" parent="." unique_id=1685387075]
 transform = Transform3D(0.008604992, 0, -0.99996305, 0, 1, 0, 0.99996305, 0, 0.008604992, -61.571503, 0.49999976, 86.27169)
 script = ExtResource("3_4q5qe")
-speed = 18.0
+speed = 19.0
 attack_radius = 7.0
 hit_distance_threshold = 6.0
 attack_duration = 1.0
@@ -1634,7 +1620,7 @@ bones/4/name = "Bone.004"
 bones/4/parent = 1
 bones/4/rest = Transform3D(0.9998897, 0.00014629733, -0.014852533, -0.01485312, 0.00560534, -0.99987394, -6.302539e-05, 0.99998426, 0.0056068944, -1.875378e-09, 0.95176506, -6.409664e-10)
 bones/4/enabled = true
-bones/4/position = Vector3(7.0013302e-06, 0.95203996, 0.04908505)
+bones/4/position = Vector3(7.076298e-06, 0.9520401, 0.049085043)
 bones/4/rotation = Quaternion(0.7051024, -0.005214428, -0.0052884375, 0.7090666)
 bones/4/scale = Vector3(0.9999999, 1.0000017, 1.0000017)
 bones/5/name = "Bone.005"
@@ -1739,7 +1725,7 @@ bones/19/name = "Bone.007"
 bones/19/parent = 18
 bones/19/rest = Transform3D(1, 1.9780659e-07, 3.1974935e-08, -1.9780659e-07, 0.949071, 0.31506237, 3.197492e-08, -0.31506237, 0.949071, 6.6109074e-10, 0.6077636, 7.539086e-09)
 bones/19/enabled = true
-bones/19/position = Vector3(-0.27870244, 0.60776365, -1.9556737e-07)
+bones/19/position = Vector3(-1.1424168, 0.60776365, -7.288905e-07)
 bones/19/rotation = Quaternion(-0.15957606, 5.3982456e-15, -1.0018713e-07, 0.98718566)
 bones/19/scale = Vector3(0.9999997, 0.9999997, 0.99999976)
 bones/20/name = "Bone.008"
@@ -1753,14 +1739,14 @@ bones/21/name = "Bone.009"
 bones/21/parent = -1
 bones/21/rest = Transform3D(1, -2.1273476e-16, -1.5842295e-16, -1.5842295e-16, -0.9580723, 0.28652626, -2.1273476e-16, -0.28652626, -0.9580723, 0, 0, 0)
 bones/21/enabled = true
-bones/21/position = Vector3(0.3573916, 0, 0)
+bones/21/position = Vector3(0.011212737, 0, 0)
 bones/21/rotation = Quaternion(0.9894626, -9.37776e-17, -9.37776e-17, -0.14478883)
 bones/21/scale = Vector3(0.99999994, 0.9999984, 0.9999989)
 bones/22/name = "Bone.010"
 bones/22/parent = 21
 bones/22/rest = Transform3D(1, -6.79199e-17, -1.0642855e-17, 6.79199e-17, 0.9520688, 0.30588388, -1.0642873e-17, -0.3058839, 0.9520687, 1.862645e-09, 0.62395644, 0)
 bones/22/enabled = true
-bones/22/position = Vector3(-0.15490055, 0.62395644, 5.2193037e-09)
+bones/22/position = Vector3(-0.42353323, 0.62395644, 1.427076e-08)
 bones/22/rotation = Quaternion(-0.15480825, 4.186372e-24, 3.437435e-17, 0.98794454)
 bones/22/scale = Vector3(0.9999999, 0.9999994, 0.9999998)
 bones/23/name = "Bone.011"
@@ -1854,7 +1840,7 @@ bones/4/name = "Bone.004"
 bones/4/parent = 1
 bones/4/rest = Transform3D(0.9998897, 0.00014629733, -0.014852533, -0.01485312, 0.00560534, -0.99987394, -6.302539e-05, 0.99998426, 0.0056068944, -1.875378e-09, 0.95176506, -6.409664e-10)
 bones/4/enabled = true
-bones/4/position = Vector3(7.0013302e-06, 0.95203996, 0.04908505)
+bones/4/position = Vector3(7.076298e-06, 0.9520401, 0.049085043)
 bones/4/rotation = Quaternion(0.7051024, -0.005214428, -0.0052884375, 0.7090666)
 bones/4/scale = Vector3(0.9999999, 1.0000017, 1.0000017)
 bones/5/name = "Bone.005"
@@ -1959,7 +1945,7 @@ bones/19/name = "Bone.007"
 bones/19/parent = 18
 bones/19/rest = Transform3D(1, 1.9780659e-07, 3.1974935e-08, -1.9780659e-07, 0.949071, 0.31506237, 3.197492e-08, -0.31506237, 0.949071, 6.6109074e-10, 0.6077636, 7.539086e-09)
 bones/19/enabled = true
-bones/19/position = Vector3(-0.27870244, 0.60776365, -1.9556737e-07)
+bones/19/position = Vector3(-1.1424168, 0.60776365, -7.288905e-07)
 bones/19/rotation = Quaternion(-0.15957606, 5.3982456e-15, -1.0018713e-07, 0.98718566)
 bones/19/scale = Vector3(0.9999997, 0.9999997, 0.99999976)
 bones/20/name = "Bone.008"
@@ -1973,14 +1959,14 @@ bones/21/name = "Bone.009"
 bones/21/parent = -1
 bones/21/rest = Transform3D(1, -2.1273476e-16, -1.5842295e-16, -1.5842295e-16, -0.9580723, 0.28652626, -2.1273476e-16, -0.28652626, -0.9580723, 0, 0, 0)
 bones/21/enabled = true
-bones/21/position = Vector3(0.3573916, 0, 0)
+bones/21/position = Vector3(0.011212737, 0, 0)
 bones/21/rotation = Quaternion(0.9894626, -9.37776e-17, -9.37776e-17, -0.14478883)
 bones/21/scale = Vector3(0.99999994, 0.9999984, 0.9999989)
 bones/22/name = "Bone.010"
 bones/22/parent = 21
 bones/22/rest = Transform3D(1, -6.79199e-17, -1.0642855e-17, 6.79199e-17, 0.9520688, 0.30588388, -1.0642873e-17, -0.3058839, 0.9520687, 1.862645e-09, 0.62395644, 0)
 bones/22/enabled = true
-bones/22/position = Vector3(-0.15490055, 0.62395644, 5.2193037e-09)
+bones/22/position = Vector3(-0.42353323, 0.62395644, 1.427076e-08)
 bones/22/rotation = Quaternion(-0.15480825, 4.186372e-24, 3.437435e-17, 0.98794454)
 bones/22/scale = Vector3(0.9999999, 0.9999994, 0.9999998)
 bones/23/name = "Bone.011"
@@ -2159,6 +2145,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
 [node name="Screen_Fade" type="CanvasLayer" parent="." unique_id=1739216067]
@@ -2178,8 +2165,20 @@ mouse_filter = 2
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2131724839]
 
-[node name="MainTimer" parent="UI" unique_id=203433636 instance=ExtResource("27_q373u")]
+[node name="MainTimer" type="Node" parent="UI" unique_id=203433636]
+script = ExtResource("28_3oqhv")
 timeout_sound = ExtResource("28_wx4jj")
+show_intro_text = false
+hide_intro_text = true
+use_random_blank = false
+
+[node name="TimeDisplay" type="RichTextLabel" parent="UI/MainTimer" unique_id=1065760690]
+offset_right = 1154.0
+offset_bottom = 651.0
+bbcode_enabled = true
+
+[node name="Timer" type="Timer" parent="UI/MainTimer" unique_id=228405251]
+wait_time = 30.0
 
 [node name="ProximityLabel" type="RichTextLabel" parent="UI" unique_id=131666977]
 anchors_preset = 7
@@ -2244,11 +2243,10 @@ volume_db = -17.5
 autoplay = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=350287334]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 36.33789, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.11303, 0)
 shadow_enabled = true
 shadow_blur = 10.0
-omni_range = 4096.0
-omni_attenuation = 0.554
+omni_range = 1089.678
 
 [node name="lvl2fn" parent="." unique_id=560619567 instance=ExtResource("30_4q5qe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.158478, 0.8111477, 31.896364)
@@ -2256,7 +2254,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56.158478, 0.8111477, 31.8963
 [node name="Abstract4" type="Area3D" parent="." unique_id=50862619]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.963326, 1.8111477, -84.21224)
 script = ExtResource("37_1220j")
-coin_sprite_frames = SubResource("SpriteFrames_6yj4k")
+target_shape = 2
+coin_sprite_frames = SubResource("SpriteFrames_rga7q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract4" unique_id=808560643]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.2698059, 0)
@@ -2296,7 +2295,8 @@ omni_attenuation = 0.1
 [node name="Abstract8" type="Area3D" parent="." unique_id=368986113]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 238.92601, 1.811142, -62.277084)
 script = ExtResource("37_1220j")
-coin_sprite_frames = SubResource("SpriteFrames_6yj4k")
+target_shape = 1
+coin_sprite_frames = SubResource("SpriteFrames_rga7q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract8" unique_id=1439277143]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.2698059, 0)
@@ -2336,7 +2336,8 @@ omni_attenuation = 0.1
 [node name="Abstract9" type="Area3D" parent="." unique_id=1299174287]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251.1521, 13.163146, 30.913094)
 script = ExtResource("37_1220j")
-coin_sprite_frames = SubResource("SpriteFrames_6yj4k")
+target_shape = 2
+coin_sprite_frames = SubResource("SpriteFrames_rga7q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract9" unique_id=2060485114]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.2698059, 0)
@@ -2376,7 +2377,7 @@ omni_attenuation = 0.1
 [node name="Abstract10" type="Area3D" parent="." unique_id=1932035478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.91664, 1.8111477, 183.80977)
 script = ExtResource("37_1220j")
-coin_sprite_frames = SubResource("SpriteFrames_6yj4k")
+coin_sprite_frames = SubResource("SpriteFrames_rga7q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract10" unique_id=636528669]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.2698059, 0)
@@ -2417,7 +2418,7 @@ omni_attenuation = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85.30206, 1.8111477, -162.20573)
 script = ExtResource("37_1220j")
 target_shape = 1
-coin_sprite_frames = SubResource("SpriteFrames_6yj4k")
+coin_sprite_frames = SubResource("SpriteFrames_rga7q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract2" unique_id=1269804269]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.2698059, 0)
@@ -2457,8 +2458,7 @@ omni_attenuation = 0.1
 [node name="Abstract3" type="Area3D" parent="." unique_id=393892653]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.31967, 1.8111477, 172.16136)
 script = ExtResource("37_1220j")
-target_shape = 1
-coin_sprite_frames = SubResource("SpriteFrames_6yj4k")
+coin_sprite_frames = SubResource("SpriteFrames_rga7q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Abstract3" unique_id=641813784]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.2698059, 0)
@@ -2498,11 +2498,6 @@ omni_attenuation = 0.1
 [node name="Area3D" type="Area3D" parent="." unique_id=846536269]
 transform = Transform3D(-1.4142137, 0, -1.4142134, 0, 2, 0, 1.4142134, 0, -1.4142137, -164.63199, 0.33958817, -169.21043)
 script = ExtResource("43_l2vvo")
-proximity_distance = 100.0
-spawn_positions = Array[Vector3]([])
-next_level_scene = ExtResource("43_pjcxh")
-show_score_menu = false
-post_win_delay = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1807466464]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.020843506, 1.189149, 0)
