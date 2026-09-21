@@ -14,12 +14,16 @@ extends CharacterBody3D
 @export var knockback_force: float = 35.0 
 @export var knockback_upward_force: float = 6.0 
 
+@export_group("Attack Tuning")
+@export var lunge_speed: float = 28.0 
+
 @export_group("Audio Streams")
 @export var footstep_sounds: Array[AudioStream] = []
 @export var lunge_jump_sound: AudioStream
 @export var parry_success_sound: AudioStream
 @export var parry_fail_sound: AudioStream
 @export var teleport_sound: AudioStream
+@export var time_deduct_sound: AudioStream # Sound played when player gets caught & loses time
 
 @export_group("Footstep Tuning")
 @export var step_distance: float = 2.2
@@ -135,8 +139,8 @@ func _start_lunge_attack() -> void:
 	emit_signal("lunge_started", self)
 	
 	var lunge_dir = (player.global_position - global_position).normalized()
-	velocity.x = lunge_dir.x * 18.0 
-	velocity.z = lunge_dir.z * 18.0
+	velocity.x = lunge_dir.x * lunge_speed 
+	velocity.z = lunge_dir.z * lunge_speed
 
 func _teleport_to_random_location() -> void:
 	var nav_map = nav_agent.get_navigation_map()
@@ -164,13 +168,14 @@ func close_parry_window() -> void:
 		var dist_to_player = global_position.distance_to(player.global_position) if player else 999.0
 		
 		if dist_to_player <= hit_distance_threshold:
-			# --- SUCCESSFUL ATTACK (HIT) ---
+			# --- SUCCESSFUL ATTACK (HIT / CAUGHT) ---
 			_play_sfx(parry_fail_sound)
 			
-			# 1. Deduct 30 seconds from MainTimer
+			# 1. Deduct 30 seconds from MainTimer & play time penalty SFX
 			var main_timer = get_tree().get_first_node_in_group("MainTimer")
 			if main_timer and main_timer.has_method("subtract_time"):
 				main_timer.subtract_time(30.0)
+				_play_sfx(time_deduct_sound)
 			
 			# 2. Trigger black screen overlay
 			if player and player.has_method("trigger_hit_overlay"):

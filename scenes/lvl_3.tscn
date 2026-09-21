@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c3tok1g8ftbvp" path="res://textures/Stars6.png" id="1_b2vgo"]
 [ext_resource type="Material" uid="uid://dfw5pat6efjgq" path="res://Materials/Parking_Lot2.tres" id="1_en466"]
 [ext_resource type="Material" uid="uid://cpjxd8a84r83c" path="res://Materials/Slope.tres" id="2_s5o8y"]
+[ext_resource type="AudioStream" uid="uid://bjny4psv43wfw" path="res://sfx/alert2.wav" id="2_ynljt"]
 [ext_resource type="Material" uid="uid://bphooiq0v00f8" path="res://Materials/parking_roof.tres" id="4_s0p5c"]
 [ext_resource type="Script" uid="uid://vnqmpabp5etv" path="res://scripts/player.gd" id="6_fnnx1"]
 [ext_resource type="ArrayMesh" uid="uid://bmnyb7bjbrc65" path="res://Models/cars/Car 05/Car5.obj" id="7_b2vgo"]
@@ -64,6 +65,8 @@
 [ext_resource type="Texture2D" uid="uid://cyhou8nrmi1x" path="res://Abstract Pics/Screenshot 2026-09-13 205601.png" id="61_ynljt"]
 [ext_resource type="Texture2D" uid="uid://balrrjm4i436p" path="res://Abstract Pics/Screenshot 2026-09-13 205623.png" id="62_7n3lu"]
 [ext_resource type="Shader" uid="uid://dn6n3sbj07vkr" path="res://Abstract Pics/abstract.gdshader" id="63_wq80p"]
+[ext_resource type="AudioStream" uid="uid://dwl6c81sdsdp2" path="res://sfx/freesound_community-parking-lot-ambience-73908.mp3" id="66_7n3lu"]
+[ext_resource type="AudioStream" uid="uid://pdne4poecvew" path="res://sfx/freesound_community-night-ambience-17064.mp3" id="67_wq80p"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_aegdx"]
 panorama = ExtResource("1_b2vgo")
@@ -2593,6 +2596,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity45" unique_id=1577139815]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity55" parent="." unique_id=1335162462 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.0665, 5.583987, 26.864292)
 player = NodePath("../Player")
@@ -2601,6 +2610,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity55" unique_id=482077775]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity60" parent="." unique_id=1675483693 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.1514, 16.497381, 0)
@@ -2611,6 +2626,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity60" unique_id=460281566]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity69" parent="." unique_id=52372818 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.38286, 11.646887, 0)
 player = NodePath("../Player")
@@ -2619,6 +2640,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity69" unique_id=1671426697]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity91" parent="." unique_id=2042343684 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 280.62445, 48.485893, 66.46178)
@@ -2629,6 +2656,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity91" unique_id=277701643]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity105" parent="." unique_id=1890812079 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 227.32112, 43.061012, 83.26776)
 player = NodePath("../Player")
@@ -2637,6 +2670,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity105" unique_id=150088787]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity114" parent="." unique_id=817633153 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 243.01794, 40.079502, 64.10966)
@@ -2647,6 +2686,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity114" unique_id=957545776]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity127" parent="." unique_id=1932283660 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 242.97511, 81.395515, 66.42193)
 player = NodePath("../Player")
@@ -2655,6 +2700,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity127" unique_id=2123816282]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity143" parent="." unique_id=479407511 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 236.02396, 68.02509, 81.91343)
@@ -2665,6 +2716,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity143" unique_id=1574278353]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity157" parent="." unique_id=1729313487 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 277.16898, 77.29427, 29.173275)
 player = NodePath("../Player")
@@ -2673,6 +2730,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity157" unique_id=414826873]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity177" parent="." unique_id=1368711528 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 271.0148, 91.537506, 69.89218)
@@ -2683,6 +2746,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity177" unique_id=1194860604]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity184" parent="." unique_id=280591660 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 100.5376, 87.65431)
 player = NodePath("../Player")
@@ -2691,6 +2760,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity184" unique_id=1906971109]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity200" parent="." unique_id=504378227 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 273.1822, 90.11472, 56.00932)
@@ -2701,6 +2776,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity200" unique_id=254892413]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity212" parent="." unique_id=925667736 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 259.74582, 144.56813, 77.07844)
 player = NodePath("../Player")
@@ -2709,6 +2790,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity212" unique_id=1266086102]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity224" parent="." unique_id=1663902826 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 147.03471, 87.65431)
@@ -2719,6 +2806,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity224" unique_id=187723567]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity233" parent="." unique_id=1198993850 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 236.20363, 146.42458, 52.468433)
 player = NodePath("../Player")
@@ -2727,6 +2820,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity233" unique_id=260859454]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity46" parent="." unique_id=667635756 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 206.19635, 12.8912945, 11.241062)
@@ -2737,6 +2836,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity46" unique_id=79757688]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity56" parent="." unique_id=446495196 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.0665, 5.583987, 26.864292)
 player = NodePath("../Player")
@@ -2745,6 +2850,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity56" unique_id=195936180]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity61" parent="." unique_id=1420140780 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.1514, 11.59075, 4.7006416)
@@ -2755,6 +2866,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity61" unique_id=999174431]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity70" parent="." unique_id=1690938753 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.38286, 11.646887, 0)
 player = NodePath("../Player")
@@ -2763,6 +2880,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity70" unique_id=1980429540]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity92" parent="." unique_id=1187494667 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 280.62445, 48.485893, 66.46178)
@@ -2773,6 +2896,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity92" unique_id=1731942738]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity106" parent="." unique_id=1899868906 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 227.32112, 43.061012, 83.26776)
 player = NodePath("../Player")
@@ -2781,6 +2910,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity106" unique_id=239687963]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity115" parent="." unique_id=2078253617 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, 243.01794, 40.079502, 64.10966)
@@ -2791,6 +2926,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity115" unique_id=1861333666]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity128" parent="." unique_id=163631285 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 242.97511, 81.395515, 66.42193)
 player = NodePath("../Player")
@@ -2799,6 +2940,9 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Lvl3_entity128" unique_id=1318480429]
+stream = ExtResource("2_ynljt")
 
 [node name="Lvl3_entity144" parent="." unique_id=110699353 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 236.02396, 68.02509, 81.91343)
@@ -2809,6 +2953,9 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Lvl3_entity144" unique_id=1007152217]
+stream = ExtResource("2_ynljt")
+
 [node name="Lvl3_entity158" parent="." unique_id=30475753 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.49086303, -0.1903002, 0.8501996, -0.09515011, 0.98172593, 0.1648048, -0.8660254, 0, -0.50000006, 277.16898, 77.29427, 29.173275)
 player = NodePath("../Player")
@@ -2817,6 +2964,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity158" unique_id=1149885102]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity178" parent="." unique_id=533501346 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 271.0148, 91.537506, 69.89218)
@@ -2827,6 +2980,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity178" unique_id=35826820]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity185" parent="." unique_id=2069469387 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 100.5376, 87.65431)
 player = NodePath("../Player")
@@ -2835,6 +2994,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity185" unique_id=1827894097]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity201" parent="." unique_id=979716726 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 273.1822, 90.11472, 56.00932)
@@ -2845,6 +3010,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity201" unique_id=1888678918]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity213" parent="." unique_id=325675785 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 259.74582, 144.56813, 77.07844)
 player = NodePath("../Player")
@@ -2853,6 +3024,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="Lvl3_entity213" unique_id=433180328]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="Lvl3_entity225" parent="." unique_id=574764213 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 222.21413, 147.03471, 87.65431)
@@ -2863,6 +3040,12 @@ move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Lvl3_entity225" unique_id=2133150763]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
+
 [node name="Lvl3_entity234" parent="." unique_id=1251613927 node_paths=PackedStringArray("player", "main_timer") instance=ExtResource("1_aegdx")]
 transform = Transform3D(-0.48727074, 0.2242073, 0.84397763, 0.11210366, 0.9745414, -0.19416922, -0.8660254, 7.314428e-09, -0.50000006, 236.20363, 146.42458, 52.468433)
 player = NodePath("../Player")
@@ -2871,6 +3054,12 @@ detection_radius = 30.0
 move_speed = 15.5
 catch_distance = 1.0
 time_penalty = 10.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Lvl3_entity234" unique_id=1969131851]
+stream = ExtResource("2_ynljt")
+volume_db = 9.083
+autoplay = true
+max_distance = 40.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=86698238]
 environment = SubResource("Environment_fk0w4")
@@ -3038,7 +3227,7 @@ mesh = SubResource("BoxMesh_y4qgk")
 shape = SubResource("ConcavePolygonShape3D_goi32")
 
 [node name="floor1" type="MeshInstance3D" parent="Plane+Walls" unique_id=2060108935]
-transform = Transform3D(92.549576, 0, 0, 0, -1.0297325, 0, 0, 0, 95.32408, 234.07236, -0.2696457, 26.524017)
+transform = Transform3D(112.92, 0, -9.428022e-06, 0, -1.03, 0, 9.87178e-06, 0, 107.844, 234.07236, -0.2696457, 26.524017)
 material_override = ExtResource("1_en466")
 mesh = SubResource("ArrayMesh_m3eo5")
 
@@ -13138,3 +13327,38 @@ draw_pass_1 = SubResource("QuadMesh_1iws0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -105.56351, 0)
 omni_range = 10.0
 omni_attenuation = 0.1
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=891409213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 218.05814, 14.449995, 0)
+stream = ExtResource("66_7n3lu")
+volume_db = 5.939
+autoplay = true
+max_distance = 4096.0
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="." unique_id=262188234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 218.05814, 44.365158, 0)
+stream = ExtResource("66_7n3lu")
+volume_db = 5.939
+autoplay = true
+max_distance = 4096.0
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="." unique_id=2147467674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 218.05814, 76.5477, 0)
+stream = ExtResource("66_7n3lu")
+volume_db = 5.939
+autoplay = true
+max_distance = 4096.0
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="." unique_id=1100010018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 218.05814, 103.898415, 0)
+stream = ExtResource("66_7n3lu")
+volume_db = 5.939
+autoplay = true
+max_distance = 4096.0
+
+[node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="." unique_id=1839548720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 218.05814, 135.95416, 0)
+stream = ExtResource("67_wq80p")
+volume_db = 17.118
+autoplay = true
+max_distance = 4096.0
