@@ -15,6 +15,7 @@ gradient = SubResource("Gradient_myx47")
 [node name="PauseMenu" type="CanvasLayer" unique_id=353940448]
 process_mode = 3
 script = ExtResource("1_n87rw")
+main_menu_scene = "uid://dd54gmfqytqbg"
 disabled_scenes = Array[String]([])
 use_whitelist_mode = true
 allowed_scenes = Array[String](["res://scenes/world.tscn", "res://scenes/lvl_2.tscn", "res://scenes/lvl_3.tscn", "res://scenes/lvl_4_fn.tscn", "res://scenes/lvl_5.tscn"])

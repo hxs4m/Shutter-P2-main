@@ -44,6 +44,8 @@
 [ext_resource type="Texture2D" uid="uid://balrrjm4i436p" path="res://Abstract Pics/Screenshot 2026-09-13 205623.png" id="40_l2vvo"]
 [ext_resource type="Shader" uid="uid://dn6n3sbj07vkr" path="res://Abstract Pics/abstract.gdshader" id="41_pjcxh"]
 [ext_resource type="Script" uid="uid://cdf4sslcwylnx" path="res://scripts/door.gd" id="43_l2vvo"]
+[ext_resource type="AudioStream" uid="uid://tbb00llmnt2d" path="res://sfx/freesound_community-creepy-distortion-29539.mp3" id="44_iserb"]
+[ext_resource type="PackedScene" uid="uid://bqarwakha3u1k" path="res://scenes/lvl_3.tscn" id="44_pjcxh"]
 
 [sub_resource type="Environment" id="Environment_lk6hv"]
 ambient_light_source = 2
@@ -1728,7 +1730,7 @@ bones/19/name = "Bone.007"
 bones/19/parent = 18
 bones/19/rest = Transform3D(1, 1.9780659e-07, 3.1974935e-08, -1.9780659e-07, 0.949071, 0.31506237, 3.197492e-08, -0.31506237, 0.949071, 6.6109074e-10, 0.6077636, 7.539086e-09)
 bones/19/enabled = true
-bones/19/position = Vector3(-0.39589494, 0.60776365, -2.6793094e-07)
+bones/19/position = Vector3(-0.46892244, 0.60776365, -3.130237e-07)
 bones/19/rotation = Quaternion(-0.15957606, 5.3982456e-15, -1.0018713e-07, 0.98718566)
 bones/19/scale = Vector3(0.9999997, 0.9999997, 0.99999976)
 bones/20/name = "Bone.008"
@@ -1742,14 +1744,14 @@ bones/21/name = "Bone.009"
 bones/21/parent = -1
 bones/21/rest = Transform3D(1, -2.1273476e-16, -1.5842295e-16, -1.5842295e-16, -0.9580723, 0.28652626, -2.1273476e-16, -0.28652626, -0.9580723, 0, 0, 0)
 bones/21/enabled = true
-bones/21/position = Vector3(0.3104351, 0, 0)
+bones/21/position = Vector3(0.28116405, 0, 0)
 bones/21/rotation = Quaternion(0.9894626, -9.37776e-17, -9.37776e-17, -0.14478883)
 bones/21/scale = Vector3(0.99999994, 0.9999984, 0.9999989)
 bones/22/name = "Bone.010"
 bones/22/parent = 21
 bones/22/rest = Transform3D(1, -6.79199e-17, -1.0642855e-17, 6.79199e-17, 0.9520688, 0.30588388, -1.0642873e-17, -0.3058839, 0.9520687, 1.862645e-09, 0.62395644, 0)
 bones/22/enabled = true
-bones/22/position = Vector3(-0.1913498, 0.62395644, 6.4474444e-09)
+bones/22/position = Vector3(-0.21406282, 0.62395644, 7.2127495e-09)
 bones/22/rotation = Quaternion(-0.15480825, 4.186372e-24, 3.437435e-17, 0.98794454)
 bones/22/scale = Vector3(0.9999999, 0.9999994, 0.9999998)
 bones/23/name = "Bone.011"
@@ -1948,7 +1950,7 @@ bones/19/name = "Bone.007"
 bones/19/parent = 18
 bones/19/rest = Transform3D(1, 1.9780659e-07, 3.1974935e-08, -1.9780659e-07, 0.949071, 0.31506237, 3.197492e-08, -0.31506237, 0.949071, 6.6109074e-10, 0.6077636, 7.539086e-09)
 bones/19/enabled = true
-bones/19/position = Vector3(-0.39589494, 0.60776365, -2.6793094e-07)
+bones/19/position = Vector3(-0.46892244, 0.60776365, -3.130237e-07)
 bones/19/rotation = Quaternion(-0.15957606, 5.3982456e-15, -1.0018713e-07, 0.98718566)
 bones/19/scale = Vector3(0.9999997, 0.9999997, 0.99999976)
 bones/20/name = "Bone.008"
@@ -1962,14 +1964,14 @@ bones/21/name = "Bone.009"
 bones/21/parent = -1
 bones/21/rest = Transform3D(1, -2.1273476e-16, -1.5842295e-16, -1.5842295e-16, -0.9580723, 0.28652626, -2.1273476e-16, -0.28652626, -0.9580723, 0, 0, 0)
 bones/21/enabled = true
-bones/21/position = Vector3(0.3104351, 0, 0)
+bones/21/position = Vector3(0.28116405, 0, 0)
 bones/21/rotation = Quaternion(0.9894626, -9.37776e-17, -9.37776e-17, -0.14478883)
 bones/21/scale = Vector3(0.99999994, 0.9999984, 0.9999989)
 bones/22/name = "Bone.010"
 bones/22/parent = 21
 bones/22/rest = Transform3D(1, -6.79199e-17, -1.0642855e-17, 6.79199e-17, 0.9520688, 0.30588388, -1.0642873e-17, -0.3058839, 0.9520687, 1.862645e-09, 0.62395644, 0)
 bones/22/enabled = true
-bones/22/position = Vector3(-0.1913498, 0.62395644, 6.4474444e-09)
+bones/22/position = Vector3(-0.21406282, 0.62395644, 7.2127495e-09)
 bones/22/rotation = Quaternion(-0.15480825, 4.186372e-24, 3.437435e-17, 0.98794454)
 bones/22/scale = Vector3(0.9999999, 0.9999994, 0.9999998)
 bones/23/name = "Bone.011"
@@ -2501,6 +2503,11 @@ omni_attenuation = 0.1
 [node name="Area3D" type="Area3D" parent="." unique_id=846536269]
 transform = Transform3D(-1.4142137, 0, -1.4142134, 0, 2, 0, 1.4142134, 0, -1.4142137, -164.63199, 0.33958817, -169.21043)
 script = ExtResource("43_l2vvo")
+entry_sound = ExtResource("44_iserb")
+proximity_distance = 200.0
+spawn_positions = Array[Vector3]([])
+next_level_scene = ExtResource("44_pjcxh")
+show_score_menu = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1807466464]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.020843506, 1.189149, 0)

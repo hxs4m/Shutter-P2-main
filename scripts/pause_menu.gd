@@ -1,5 +1,9 @@
 extends CanvasLayer
 
+@export_group("Scene Navigation")
+## File path for the Main Menu scene loaded when "Back To Menu" is pressed
+@export_file("*.tscn") var main_menu_scene: String = "res://scenes/MainMenuScene.tscn"
+
 @export_group("Pause Restrictions")
 ## File paths for scenes where pausing is disabled (e.g., res://scenes/MainMenuScene.tscn)
 @export var disabled_scenes: Array[String] = [
@@ -99,7 +103,11 @@ func _on_back_to_menu_pressed() -> void:
 	get_tree().paused = false
 	hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	get_tree().change_scene_to_file("res://scenes/MainMenuScene.tscn")
+	
+	if main_menu_scene != "":
+		get_tree().change_scene_to_file(main_menu_scene)
+	else:
+		push_error("PauseMenu: Main menu scene path is not set in the Inspector!")
 
 
 func _on_quit_pressed() -> void:

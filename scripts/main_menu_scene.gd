@@ -76,41 +76,44 @@ func _ready() -> void:
 	add_child(_audio_player)
 
 	# Hide menu & show disclaimers initially
-	menu_layer.visible = false
-	disclaimer_layer.visible = true
+	if is_instance_valid(menu_layer):
+		menu_layer.visible = false
+	if is_instance_valid(disclaimer_layer):
+		disclaimer_layer.visible = true
 	
-	if settings_menu:
+	if is_instance_valid(settings_menu):
 		settings_menu.visible = false
-	if credits_menu:
+	if is_instance_valid(credits_menu):
 		credits_menu.visible = false
 	
 	# Apply global font to pre-existing disclaimer label if set
-	if custom_font:
+	if custom_font and is_instance_valid(disclaimer_label):
 		disclaimer_label.add_theme_font_override("font", custom_font)
 	
 	# Initial label anchor setup
-	_setup_disclaimer_label_anchors()
+	if is_instance_valid(disclaimer_label):
+		_setup_disclaimer_label_anchors()
+		disclaimer_label.add_theme_font_size_override("font_size", 36)
 	
 	# Create programmatic UI elements
 	_create_headphone_icon()
 	_create_controls_label()
 	_setup_credits_ui()
 	
-	# Assign retro button styles and connect sound signals
+	# Assign retro button styles and connect sound signals safely
 	_style_buttons_retro()
 	
-	disclaimer_label.add_theme_font_size_override("font_size", 36)
-	
-	play_button.pressed.connect(_on_play_pressed)
-	settings_button.pressed.connect(_on_settings_pressed)
-	credits_button.pressed.connect(_on_credits_pressed)
-	controls_button.pressed.connect(_on_controls_pressed)
-	exit_button.pressed.connect(_on_exit_pressed)
+	# Safe button connections
+	if is_instance_valid(play_button): play_button.pressed.connect(_on_play_pressed)
+	if is_instance_valid(settings_button): settings_button.pressed.connect(_on_settings_pressed)
+	if is_instance_valid(credits_button): credits_button.pressed.connect(_on_credits_pressed)
+	if is_instance_valid(controls_button): controls_button.pressed.connect(_on_controls_pressed)
+	if is_instance_valid(exit_button): exit_button.pressed.connect(_on_exit_pressed)
 
 	# Automatically hook up the settings Back button to return to Main Menu
-	if settings_menu:
+	if is_instance_valid(settings_menu):
 		var back_btn = settings_menu.find_child("BackButton", true, false)
-		if back_btn:
+		if is_instance_valid(back_btn):
 			back_btn.pressed.connect(_on_settings_closed)
 
 	_run_disclaimer_sequence()
@@ -118,6 +121,7 @@ func _ready() -> void:
 
 # Base centering setup for disclaimer label
 func _setup_disclaimer_label_anchors() -> void:
+	if not is_instance_valid(disclaimer_label): return
 	disclaimer_label.set_anchors_preset(Control.PRESET_CENTER)
 	disclaimer_label.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	disclaimer_label.grow_vertical = Control.GROW_DIRECTION_BOTH
@@ -127,6 +131,7 @@ func _setup_disclaimer_label_anchors() -> void:
 
 # Updates the label's vertical position based on active offset
 func _set_disclaimer_vertical_offset(offset: float) -> void:
+	if not is_instance_valid(disclaimer_label): return
 	disclaimer_label.offset_top = offset
 	disclaimer_label.offset_bottom = offset
 
@@ -143,66 +148,80 @@ func _skip_disclaimers() -> void:
 	_skipped_disclaimers = true
 	_in_disclaimer_sequence = false
 	
-	disclaimer_layer.visible = false
-	if headphone_rect:
+	if is_instance_valid(disclaimer_layer):
+		disclaimer_layer.visible = false
+	if is_instance_valid(headphone_rect):
 		headphone_rect.visible = false
 		headphone_rect.modulate.a = 0.0
 		
-	disclaimer_bg.color.a = 0.0
+	if is_instance_valid(disclaimer_bg):
+		disclaimer_bg.color.a = 0.0
 	
-	menu_layer.visible = true
-	menu_layer.modulate.a = 1.0
+	if is_instance_valid(menu_layer):
+		menu_layer.visible = true
+		menu_layer.modulate.a = 1.0
 
 
 func _run_disclaimer_sequence() -> void:
 	_in_disclaimer_sequence = true
-	disclaimer_label.modulate.a = 0.0
+	if is_instance_valid(disclaimer_label):
+		disclaimer_label.modulate.a = 0.0
 
 	# --- Disclaimer 1 ---
 	_set_disclaimer_vertical_offset(disclaimer_1_vertical_offset)
-	disclaimer_label.text = disclaimer_1_text
+	if is_instance_valid(disclaimer_label):
+		disclaimer_label.text = disclaimer_1_text
 	
-	if headphone_rect and headphone_texture:
+	if is_instance_valid(headphone_rect) and headphone_texture:
 		headphone_rect.visible = true
 		headphone_rect.modulate.a = 0.0
 
-	await _stepped_fade_multi([disclaimer_label, headphone_rect], 0.0, 1.0)
+	var fade_1_nodes: Array[CanvasItem] = []
+	if is_instance_valid(disclaimer_label): fade_1_nodes.append(disclaimer_label)
+	if is_instance_valid(headphone_rect): fade_1_nodes.append(headphone_rect)
+
+	await _stepped_fade_multi(fade_1_nodes, 0.0, 1.0)
 	if _skipped_disclaimers: return
 	
 	await get_tree().create_timer(disclaimer_display_time).timeout
 	if _skipped_disclaimers: return
 	
-	await _stepped_fade_multi([disclaimer_label, headphone_rect], 1.0, 0.0)
+	await _stepped_fade_multi(fade_1_nodes, 1.0, 0.0)
 	if _skipped_disclaimers: return
 
-	if headphone_rect:
+	if is_instance_valid(headphone_rect):
 		headphone_rect.visible = false
 
 	# --- Disclaimer 2 ---
 	_set_disclaimer_vertical_offset(disclaimer_2_vertical_offset)
-	disclaimer_label.text = disclaimer_2_text
-	await _stepped_fade(disclaimer_label, 0.0, 1.0)
+	if is_instance_valid(disclaimer_label):
+		disclaimer_label.text = disclaimer_2_text
+		await _stepped_fade(disclaimer_label, 0.0, 1.0)
 	if _skipped_disclaimers: return
 	
 	await get_tree().create_timer(disclaimer_display_time).timeout
 	if _skipped_disclaimers: return
 	
-	await _stepped_fade(disclaimer_label, 1.0, 0.0)
+	if is_instance_valid(disclaimer_label):
+		await _stepped_fade(disclaimer_label, 1.0, 0.0)
 	if _skipped_disclaimers: return
 
 	# --- Stepped Fade Out Background ---
-	await _stepped_fade_bg(disclaimer_bg, 1.0, 0.0)
+	if is_instance_valid(disclaimer_bg):
+		await _stepped_fade_bg(disclaimer_bg, 1.0, 0.0)
 	if _skipped_disclaimers: return
 
 	# Disclaimers done: show full menu layer
 	_in_disclaimer_sequence = false
-	disclaimer_layer.visible = false
-	menu_layer.visible = true
+	if is_instance_valid(disclaimer_layer):
+		disclaimer_layer.visible = false
+	if is_instance_valid(menu_layer):
+		menu_layer.visible = true
 
 
 # Dynamically creates a headphone TextureRect relative to Disclaimer 1 offset
 func _create_headphone_icon() -> void:
-	if not headphone_texture:
+	if not headphone_texture or not is_instance_valid(disclaimer_layer):
 		return
 		
 	headphone_rect = TextureRect.new()
@@ -233,6 +252,9 @@ func _create_headphone_icon() -> void:
 
 # Dynamically creates a bold controls display anchored strictly to bottom-left
 func _create_controls_label() -> void:
+	if not is_instance_valid(menu_layer):
+		return
+
 	controls_label = Label.new()
 	controls_label.text = controls_text
 	
@@ -267,7 +289,7 @@ func _create_controls_label() -> void:
 
 
 func _setup_credits_ui() -> void:
-	if not credits_menu:
+	if not is_instance_valid(credits_menu):
 		return
 		
 	credits_menu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -278,21 +300,21 @@ func _setup_credits_ui() -> void:
 	credits_menu.add_child(dark_overlay)
 	credits_menu.move_child(dark_overlay, 0)
 	
-	var credits_label := Label.new()
-	credits_label.text = credits_text
-	credits_label.set_anchors_preset(Control.PRESET_FULL_RECT)
-	credits_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	credits_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	var credits_label_node := Label.new()
+	credits_label_node.text = credits_text
+	credits_label_node.set_anchors_preset(Control.PRESET_FULL_RECT)
+	credits_label_node.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	credits_label_node.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	
 	var reg_font: Font = custom_font if custom_font else SystemFont.new()
 	if reg_font is SystemFont:
 		reg_font.font_weight = 400
 		
-	credits_label.add_theme_font_override("font", reg_font)
-	credits_label.add_theme_font_size_override("font_size", 32)
-	credits_label.add_theme_color_override("font_color", Color.WHITE)
+	credits_label_node.add_theme_font_override("font", reg_font)
+	credits_label_node.add_theme_font_size_override("font_size", 32)
+	credits_label_node.add_theme_color_override("font_color", Color.WHITE)
 	
-	credits_menu.add_child(credits_label)
+	credits_menu.add_child(credits_label_node)
 	
 	var close_btn := Button.new()
 	close_btn.text = "X"
@@ -341,13 +363,18 @@ func _style_buttons_retro() -> void:
 	if btn_font is SystemFont:
 		btn_font.font_weight = 900
 
-	play_button.text = play_button_text
-	settings_button.text = settings_button_text
-	credits_button.text = credits_button_text
-	controls_button.text = controls_button_text
-	exit_button.text = exit_button_text
+	# Assign text to valid button instances
+	if is_instance_valid(play_button): play_button.text = play_button_text
+	if is_instance_valid(settings_button): settings_button.text = settings_button_text
+	if is_instance_valid(credits_button): credits_button.text = credits_button_text
+	if is_instance_valid(controls_button): controls_button.text = controls_button_text
+	if is_instance_valid(exit_button): exit_button.text = exit_button_text
 
-	var buttons: Array[Button] = [play_button, settings_button, credits_button, controls_button, exit_button]
+	# Collect valid buttons only
+	var buttons: Array[Button] = []
+	for btn in [play_button, settings_button, credits_button, controls_button, exit_button]:
+		if is_instance_valid(btn):
+			buttons.append(btn)
 	
 	for btn in buttons:
 		btn.add_theme_stylebox_override("normal", style_normal)
@@ -367,16 +394,17 @@ func _style_buttons_retro() -> void:
 
 
 func _play_sound(stream: AudioStream) -> void:
-	if stream:
+	if stream and is_instance_valid(_audio_player):
 		_audio_player.stream = stream
 		_audio_player.play()
 
 
 # Custom stepped opacity animation using strict float interpolation lerpf()
 func _stepped_fade(node: CanvasItem, start_alpha: float, end_alpha: float, duration: float = disclaimer_fade_time) -> void:
+	if not is_instance_valid(node): return
 	var step_delay := duration / float(fade_steps)
 	for i in range(fade_steps + 1):
-		if _skipped_disclaimers: return
+		if _skipped_disclaimers or not is_instance_valid(node): return
 		var t := float(i) / float(fade_steps)
 		node.modulate.a = lerpf(start_alpha, end_alpha, t)
 		await get_tree().create_timer(step_delay).timeout
@@ -395,10 +423,11 @@ func _stepped_fade_multi(nodes: Array[CanvasItem], start_alpha: float, end_alpha
 
 
 func _stepped_fade_bg(rect: ColorRect, start_alpha: float, end_alpha: float, duration: float = disclaimer_fade_time) -> void:
+	if not is_instance_valid(rect): return
 	var step_delay := duration / float(fade_steps)
 	var current_color := rect.color
 	for i in range(fade_steps + 1):
-		if _skipped_disclaimers: return
+		if _skipped_disclaimers or not is_instance_valid(rect): return
 		var t := float(i) / float(fade_steps)
 		current_color.a = lerpf(start_alpha, end_alpha, t)
 		rect.color = current_color
@@ -409,7 +438,6 @@ func _stepped_fade_bg(rect: ColorRect, start_alpha: float, end_alpha: float, dur
 func _fade_out_scene_elements_stepped(ui_nodes: Array[CanvasItem], audio_node: AudioStreamPlayer, duration: float, steps: int) -> void:
 	var step_delay := duration / float(steps)
 	
-	# Capture initial audio linear volume
 	var start_volume_db := audio_node.volume_db if is_instance_valid(audio_node) else 0.0
 	var start_linear := db_to_linear(start_volume_db)
 
@@ -434,20 +462,19 @@ func _fade_out_scene_elements_stepped(ui_nodes: Array[CanvasItem], audio_node: A
 # BUTTON CALLBACKS
 # ============================================================
 func _on_play_pressed() -> void:
-	ScoreManager.total_overall_score = 0
-	ScoreManager.level_score = 0
-	ScoreManager.reset_level_stats()
 	if _is_transitioning:
 		return
 	_is_transitioning = true
 
-	if main_level_scene != "":
-		# Gather active menu UI components
-		var elements_to_fade: Array[CanvasItem] = [menu_layer]
-		if is_instance_valid(controls_label):
-			elements_to_fade.append(controls_label)
+	ScoreManager.total_overall_score = 0
+	ScoreManager.level_score = 0
+	ScoreManager.reset_level_stats()
 
-		# Perform slow stepped fade out for both UI and audio
+	if main_level_scene != "":
+		var elements_to_fade: Array[CanvasItem] = []
+		if is_instance_valid(menu_layer): elements_to_fade.append(menu_layer)
+		if is_instance_valid(controls_label): elements_to_fade.append(controls_label)
+
 		await _fade_out_scene_elements_stepped(
 			elements_to_fade, 
 			menu_music, 
@@ -464,31 +491,32 @@ func _on_settings_pressed() -> void:
 	if _is_transitioning:
 		return
 	
-	menu_layer.visible = false
-	settings_menu.visible = true
-	if settings_menu.has_method("open_menu"):
-		settings_menu.open_menu()
+	if is_instance_valid(menu_layer): menu_layer.visible = false
+	if is_instance_valid(settings_menu):
+		settings_menu.visible = true
+		if settings_menu.has_method("open_menu"):
+			settings_menu.open_menu()
 
 
 func _on_settings_closed() -> void:
-	settings_menu.visible = false
-	menu_layer.visible = true
+	if is_instance_valid(settings_menu): settings_menu.visible = false
+	if is_instance_valid(menu_layer): menu_layer.visible = true
 
 
 func _on_credits_pressed() -> void:
 	if _is_transitioning:
 		return
-	menu_layer.visible = false
-	credits_menu.visible = true
+	if is_instance_valid(menu_layer): menu_layer.visible = false
+	if is_instance_valid(credits_menu): credits_menu.visible = true
 
 
 func _on_credits_closed() -> void:
-	credits_menu.visible = false
-	menu_layer.visible = true
+	if is_instance_valid(credits_menu): credits_menu.visible = false
+	if is_instance_valid(menu_layer): menu_layer.visible = true
 
 
 func _on_controls_pressed() -> void:
-	if controls_label:
+	if is_instance_valid(controls_label):
 		controls_label.visible = !controls_label.visible
 
 
